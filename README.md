@@ -7,9 +7,9 @@ Discover a world of style, luxury, and innovation at our online marketplace – 
 
 ![HomePage](imagen1.png)
 
-![Product Detail](imagen2.png)
+![Product Detail](imagen4.png)
 
-![Shopping Cart](imagen3.png)
+![Shopping Cart](imagen5.png)
 
 
 ## Key Features
