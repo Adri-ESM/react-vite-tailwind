@@ -26,7 +26,7 @@ export default function OrderCard(props) {
     <div className="order-card-items">
       <div className="order-card-container">
         <div className="flex justify-between mb-2">
-          <h3 className="text-lg font-light">Pedido:</h3>
+          <h3 className="text-lg font-light">Order:</h3>
           <div>
             {renderFontAwesomeIcon}
             {/* <FontAwesomeIcon

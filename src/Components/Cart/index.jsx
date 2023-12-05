@@ -64,7 +64,7 @@ const handlePurchase = () => {
 
       <div className="w-full py-3 px-5 mt-4">
         <div className="flex justify-between">
-        <div className="text-lg font-bold text-gray-800">Total a Pagar:</div>
+        <div className="text-lg font-bold text-gray-800">Total to Pay:</div>
         <div className="text-lg font-semibold text-gray-800">${totalPrice(context.cartProducts)}</div>
         </div>
       </div>
