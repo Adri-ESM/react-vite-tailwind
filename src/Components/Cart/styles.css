@@ -1,0 +1,15 @@
+.cart-products-container {
+  display: flex;
+    width: 360px;
+    height: calc(100vh - 68px);
+    flex-direction: column;
+    overflow-y: auto;
+  /* display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 20px; */
+}

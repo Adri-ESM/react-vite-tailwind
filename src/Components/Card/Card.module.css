@@ -1,0 +1,4 @@
+.Card:hover {
+    overflow: visible;
+    white-space: normal;
+  }

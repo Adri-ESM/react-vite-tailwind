@@ -1,0 +1,33 @@
+.cart-order:hover {
+  overflow: visible;
+  white-space: normal;
+}
+.order-card-container{
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.order-card-title {
+  text-align: center;
+  align-items: center;
+}
+
+.order-card-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+
+.order-card-item > * {
+  margin: 5px 0; /* Space between elements vertically */
+}
+
+.order-card-item img {
+  max-width: 100%;
+  height: auto;
+}
+
