@@ -6,37 +6,26 @@ import PropTypes from "prop-types";
 import "./styles.css";
 
 export default function OrderCard(props) {
-  const { id, title, image, price } = props;
+  const { id, title, image, price, showDeleteIcon = true } = props;
   const context = useContext(ShoppingCartContext);
-
-  let renderFontAwesomeIcon
 
   const handleRemoveItem = () => {
     context.removeProductFromCart(id);
   };
-  if (handleRemoveItem) {
-    renderFontAwesomeIcon = <FontAwesomeIcon
-    className="text-2xl cursor-pointer"
-    icon={faTimes}
-    onClick={handleRemoveItem}
-  />
-  }
 
   return (
     <div className="order-card-items">
       <div className="order-card-container">
         <div className="flex justify-between mb-2">
-          <h3 className="text-lg font-light">Order:</h3>
-          <div>
-            {renderFontAwesomeIcon}
-            {/* <FontAwesomeIcon
-              className="text-2xl cursor-pointer"
+          {showDeleteIcon && (
+            <FontAwesomeIcon
+              className="text-xl cursor-pointer ml-auto text-red-600"
               icon={faTimes}
               onClick={handleRemoveItem}
-            /> */}
-          </div>
+            />
+          )}
         </div>
-        <div className="order-card-item ">
+        <div className="order-card-item">
           <figure className="w-20 h-20 relative group">
             <img
               className="order-image w-full h-full object-cover rounded-lg transition-transform transform cursor-pointer hover:scale-150"
@@ -51,9 +40,11 @@ export default function OrderCard(props) {
     </div>
   );
 }
+
 OrderCard.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   title: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
+  showDeleteIcon: PropTypes.bool,
 };

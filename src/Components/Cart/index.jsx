@@ -37,6 +37,9 @@ const handlePurchase = () => {
           />
         </div>
       </div>
+      <div className="text-xl font-semibold text-gray-800 ml-6">
+          Order
+          </div>
       <div>
         {context.cartProducts.map((product) => (
           <OrderCard
@@ -64,10 +67,10 @@ const handlePurchase = () => {
           Continue Shopping
         </button>
         <Link to="/my-order">
-        <button className="px-3 py-1 text-sm w-20 font-semibold text-white bg-gray-800 rounded"
+        <button className="px-3 py-1 text-sm w-25 font-semibold text-white bg-gray-800 rounded"
         onClick={handlePurchase}
         >
-          Buy
+          Buy Now
         </button>
         </Link>
       </div>
