@@ -28,7 +28,7 @@ function MyOrder() {
       </div>
       <h1 className="mt-40">This is My Order</h1>
 
-      <div className="px-6 overflow-y-scroll flex-1">
+      <div className="mt-20 px-6 overflow-y-scroll flex-1">
         {context.order?.length > 0 && context.order[0]?.Products ? (
           context.order[0].Products.map((product) => (
             <OrderCard

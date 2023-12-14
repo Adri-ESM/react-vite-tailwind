@@ -73,6 +73,14 @@ const purchase = () => {
   setCount(0);
 }
 
+const addOrder = (products) => {
+  setOrder([...order, { Products: products }]);
+};
+
+const clearCart = () => {
+  setCartProducts([]);
+};
+
   return (
     <ShoppingCartContext.Provider
       value={{
@@ -96,6 +104,8 @@ const purchase = () => {
         order,
         setOrder,
         purchase,
+        addOrder,
+        clearCart,
       }}
     >
       {children}

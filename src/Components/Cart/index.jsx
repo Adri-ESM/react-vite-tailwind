@@ -12,27 +12,14 @@ export default function Cart() {
   const context = useContext(ShoppingCartContext);
   const navigate = useNavigate();
 
-  // Función para calcular el total
-// const calculateTotal = () => {
-//   let total = 0;
-//   context.cartProducts.forEach((product) => {
-//     console.log(product.price, product.quantity);
-//     if (typeof product.price === 'number' && typeof product.quantity === 'number' && product.quantity > 0) {
-//       total += product.price * product.quantity;
-//     }
-//   });
-//   return total.toFixed(2);
-// };
-
 const handlePurchase = () => {
-  console.log("Before purchase");
-  context.purchase();
-  console.log("After purchase");
+  // Agrega los productos del carrito a la orden
+  context.addOrder([...context.cartProducts]);
+  // Limpia el carrito
+  // context.clearCart();
   context.closeCart();
-
   navigate('/my-order');
 };
-
 
   return (
     <aside
