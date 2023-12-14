@@ -1,10 +1,10 @@
 import Layout from "../../Components/Layout";
-import OrderCard from "../../Components/OrderCard";
-import { useContext } from "react";
-import { ShoppingCartContext } from "../../Context";
+//import OrderCard from "../../Components/OrderCard";
+//import { useContext } from "react";
+//import { ShoppingCartContext } from "../../Context";
 
 function MyOrders() {
-    const context = useContext(ShoppingCartContext);
+    //const context = useContext(ShoppingCartContext);
 
   return (
     <Layout>
@@ -25,7 +25,7 @@ function MyOrders() {
         
      
       <div className="flex justify-center items-center h-96">
-          <h2 className="text-1xl">You don't have any orders yet</h2>
+          <h2 className="text-1xl">You don&apos;t have any orders yet</h2>
         </div>
     
   </Layout>

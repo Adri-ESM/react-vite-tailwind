@@ -3,6 +3,7 @@ import { ShoppingCartContext } from "../../Context";
 import style from "./Card.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { generateUniqueKey } from "../utils/index.js";
 
 const Card = (data) => {
   const context = useContext(ShoppingCartContext);
@@ -17,9 +18,12 @@ const Card = (data) => {
   const addProductsToCart = (productData) => {
     if (isProductInCart) return;  // Si el producto ya está en el carrito, no hacemos nada.
 
+    const newProduct = { ...productData, cartItemId: generateUniqueKey() }; // Asignar una clave única
     context.setCount(context.count + 1);
-    context.setCartProducts([...context.cartProducts, productData]);
+    context.setCartProducts([...context.cartProducts, newProduct]);
   };
+
+ 
 
   return (
     <div className="bg-white cursor-pointer w-56 h-60 mb-10">

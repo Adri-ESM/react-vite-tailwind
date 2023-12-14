@@ -58,14 +58,20 @@ export const ShoppingCartProvider = ({ children }) => {
 // Shooping Cart - Order
 const [order, setOrder] = useState([]);
 
+// const purchase = () => {
+//   const newOrder = [...context.cartProducts];
+
+//   context.dispatch({ type: ÇLEAR_CART });
+
+//   context.dispatch({ type: SET_ORDER, payload: newOrder });
+// }
+
 const purchase = () => {
-  const newOrder = [...state.cartProducts];
-
-  dispatch({ type: ÇLEAR_CART });
-
-  dispatch({ type: SET_ORDER, payload: newOrder });
+  const newOrder = [...cartProducts];
+  setOrder(newOrder);
+  setCartProducts([]);
+  setCount(0);
 }
-
 
   return (
     <ShoppingCartContext.Provider

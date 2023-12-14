@@ -4,7 +4,7 @@ import { ShoppingCartContext } from "../../Context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import OrderCard from "../OrderCard";
-import PropTypes from "prop-types";
+//import PropTypes from "prop-types";
 import { totalPrice } from "../../utils";
 import "./styles.css";
 
@@ -13,16 +13,16 @@ export default function Cart() {
   const navigate = useNavigate();
 
   // Función para calcular el total
-const calculateTotal = () => {
-  let total = 0;
-  context.cartProducts.forEach((product) => {
-    console.log(product.price, product.quantity);
-    if (typeof product.price === 'number' && typeof product.quantity === 'number' && product.quantity > 0) {
-      total += product.price * product.quantity;
-    }
-  });
-  return total.toFixed(2);
-};
+// const calculateTotal = () => {
+//   let total = 0;
+//   context.cartProducts.forEach((product) => {
+//     console.log(product.price, product.quantity);
+//     if (typeof product.price === 'number' && typeof product.quantity === 'number' && product.quantity > 0) {
+//       total += product.price * product.quantity;
+//     }
+//   });
+//   return total.toFixed(2);
+// };
 
 const handlePurchase = () => {
   console.log("Before purchase");
@@ -88,9 +88,9 @@ const handlePurchase = () => {
   );
 }
 
-Cart.propTypes = {
-  title: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-};
+// Cart.propTypes = {
+//   title: PropTypes.string.isRequired,
+//   image: PropTypes.string.isRequired,
+//   price: PropTypes.number.isRequired,
+// };
 
