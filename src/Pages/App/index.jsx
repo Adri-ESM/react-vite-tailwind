@@ -5,6 +5,7 @@ import Home from "../Home";
 import MyAccount from "../MyAccount";
 import MyOrder from "../MyOrder";
 import MyOrders from "../MyOrders";
+import OrdersCards from "../OrdersCards";
 import NotFound from "../NotFound";
 import Clothes from "../Clothes";
 import SignIn from "../SignIn";
@@ -26,12 +27,12 @@ const AppRoutes = () => {
       element: <MyOrder />,
     },
     {
-      path: "/my-orders",
-      element: <MyOrders />,
+      path: "/orders-cards",
+      element: <OrdersCards />,
     },
     {
-      path: "/my-orders/last",
-      element: <MyOrder />,
+      path: "/my-orders",
+      element: <MyOrders />,
     },
     {
       path: "/sign-in",
