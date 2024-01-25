@@ -6,7 +6,7 @@ export default function Back() {
   return (
     <div>
       <FontAwesomeIcon
-      className="arrow text-2xl cursor-pointer mt-10"
+      className="arrow text-l cursor-pointer mt-10"
       icon={faArrowLeft}
       onClick={ () => window.history.back()}
     />

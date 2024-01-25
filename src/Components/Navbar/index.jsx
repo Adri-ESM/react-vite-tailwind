@@ -21,7 +21,7 @@ const Navbar = () => {
     <nav className="flex justify-between bg-white items-center top-0 fixed z-10 w-full py-5 px-8 text-sm font-light">
       <ul className="flex items-center gap-3">
         <li className="font-semibold text-lg">
-          <NavLink to="/">Adri&apos;s  Shop</NavLink>
+          <NavLink to="/">Kris&apos;s  Shop</NavLink>
         </li>
         <li>
           <NavLink

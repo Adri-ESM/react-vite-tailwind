@@ -11,10 +11,9 @@ export default function MyOrders() {
    
 
   return (
-    <Layout>
         <div>
             <Back />
-        </div>
+        <Layout>
       <h1 className="mt-20">My Orders</h1>
     {
         context.order.map((order, index) => {
@@ -26,5 +25,6 @@ export default function MyOrders() {
         })
       }
     </Layout>
+    </div>
   )
 }
