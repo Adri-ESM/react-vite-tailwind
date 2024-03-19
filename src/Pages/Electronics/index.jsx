@@ -2,13 +2,13 @@ import { useApiData } from "../../ContextApi/index";
 import Layout from "../../Components/Layout";
 import Card from "../../Components/Card";
 
-function Clothes() {
+function Electronics() {
   const apiData = useApiData();
 
 
-  const clothingItems = apiData.filter(
+  const electronicItems = apiData.filter(
     (item) =>
-      item.category === "men's clothing" || item.category === "women's clothing"
+      item.category === "electronics"
   );
 
   return (
@@ -16,7 +16,7 @@ function Clothes() {
       <div
         className={`flex flex-wrap justify-center space-x-4 w-full p-10`}
       >
-        {clothingItems.map((item) => (
+        {electronicItems.map((item) => (
           <Card
             key={item.id}
             data={item}
@@ -28,4 +28,4 @@ function Clothes() {
   );
 }
 
-export default Clothes;
+export default Electronics;

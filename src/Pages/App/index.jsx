@@ -8,6 +8,8 @@ import MyOrders from "../MyOrders";
 import OrdersCards from "../OrdersCards";
 import NotFound from "../NotFound";
 import Clothes from "../Clothes";
+import Electronics from "../Electronics";
+import Jewelry from "../Jewelry";
 import SignIn from "../SignIn";
 import Cart from "../../Components/Cart";
 import "../../App.css";
@@ -45,6 +47,14 @@ const AppRoutes = () => {
     {
       path: "/clothes",
       element: <Clothes />,
+    },
+    {
+      path: "/electronics",
+      element: <Electronics />,
+    },
+    {
+      path: "/jewelry",
+      element: <Jewelry />,
     },
     {
       path: "/*",
