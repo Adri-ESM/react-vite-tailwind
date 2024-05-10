@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { ShoppingCartContext } from "../../Context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,15 +13,20 @@ const Navbar = () => {
     context.openCart();
   };
 
-  // const handleRemoveItem = () => {
-  //   context.removeProductFromCart(id);
+  // Función para actualizar el contador al eliminar productos
+  // const updateCountOnRemove = () => {
+  //   let totalCount = 0;
+  //   context.cartProducts.forEach(product => {
+  //     totalCount += product.quantity;
+  //   });
+  //   return totalCount;
   // };
 
   return (
     <nav className="flex justify-between bg-white items-center top-0 fixed z-10 w-full py-5 px-8 text-sm font-light">
       <ul className="flex items-center gap-3">
         <li className="font-semibold text-lg">
-          <NavLink to="/">Kris&apos;s  Shop</NavLink>
+          <NavLink to="/">Adri&apos;s  Shop</NavLink>
         </li>
         <li>
           <NavLink
@@ -57,7 +62,6 @@ const Navbar = () => {
         </li>
       </ul>
       <ul className="flex items-center gap-3">
-        {/* <li className="text-black/60">adrievelyn@gmail.com</li> */}
         <li>
           <NavLink
             to="/my-order"
@@ -91,27 +95,26 @@ const Navbar = () => {
           </NavLink>
         </li>
         <li>
-          {/* <NavLink to="/cart" className="flex items-center gap-1"> */}
           <FontAwesomeIcon
              icon={faShoppingCart}
-             className="w-6 h-6 text-gray-500"
-             onClick={() => {
-              openProductModal();
-            }}
+             className="w-6 h-6 text-gray- cursor-pointer"
+             onClick={openProductModal}
           />
            {context.count}
+          
+          
+       
         {context.cartProducts.map((product) => (
           <div
-          key={product.cartItemId || generateUniqueKey()}  
-          onClick={() => {
-            context.removeProductFromCart(product.id);
-          }}
+            key={product.cartItemId || generateUniqueKey()}  
+            onClick={() => {
+              context.removeProductFromCart(product.id);
+              const newCount = updateCountOnRemove();
+              context.setCount(newCount);
+            }}
           >
-            
           </div>
         ))}
-         
-          {/* </NavLink> */}
         </li>
       </ul>
     </nav>

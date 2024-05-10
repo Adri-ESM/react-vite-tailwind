@@ -1,6 +1,7 @@
 import { useApiData } from "../../ContextApi/index";
 import Layout from "../../Components/Layout";
 import Card from "../../Components/Card";
+import Cart from "../../Components/Cart";
 
 function Jewelry() {
   const apiData = useApiData();
@@ -24,6 +25,7 @@ function Jewelry() {
           />
         ))}
       </div>
+      <Cart />
     </Layout>
   );
 }

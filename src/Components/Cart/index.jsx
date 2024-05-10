@@ -12,14 +12,23 @@ export default function Cart() {
   const context = useContext(ShoppingCartContext);
   const navigate = useNavigate();
 
-const handlePurchase = () => {
-  // Agrega los productos del carrito a la orden
-  context.addOrder([...context.cartProducts]);
-  // Limpia el carrito
-  // context.clearCart();
-  context.closeCart();
-  navigate('/my-order');
-};
+  const handleDelete = () => {
+    // Clear the cart
+    context.clearCart();
+    // Delete the generated order
+    context.deleteOrder();
+    // Close the cart
+    context.closeCart();
+  };
+  
+  const handlePurchase = () => {
+    // Generate a new order with the products in the cart
+    context.addOrder([...context.cartProducts]);
+    // Close the cart
+    context.closeCart();
+    // Navigate to the my-order page
+    navigate('/my-order');
+  };
 
   return (
     <aside
@@ -37,9 +46,19 @@ const handlePurchase = () => {
           />
         </div>
       </div>
-      <div className="text-xl font-semibold text-gray-800 ml-6">
+      <div className="flex items-center p-6">
+      <div className="text-xl justify-around font-semibold text-gray-800 ml-6">
           Order
+        </div>
+        <div className="flex items-center justify-around w-full py-3">
+          <button className="px-3 py-1 text-sm w-25 font-semibold text-white bg-gray-800 rounded hover:bg-white hover:text-gray-800 transition duration-300"
+        onClick={handleDelete}
+        >
+          Clear Cart
+        </button>
           </div>
+      </div>
+          
       <div>
         {context.cartProducts.map((product) => (
           <OrderCard
@@ -60,14 +79,16 @@ const handlePurchase = () => {
       </div>
       
       <div className="flex items-center justify-around w-full py-3">
+      <Link to="/">
         <button
-          className="px-3 py-1 text-sm font-semibold text-white bg-gray-800 rounded"
+          className="px-3 py-1 text-sm font-semibold text-white bg-gray-800 rounded hover:bg-white hover:text-gray-800 transition duration-300"
           onClick={context.closeCart}
         >
           Continue Shopping
         </button>
+        </Link>
         <Link to="/my-order">
-        <button className="px-3 py-1 text-sm w-25 font-semibold text-white bg-gray-800 rounded"
+        <button className="px-3 py-1 text-sm w-25 font-semibold text-white bg-gray-800 rounded hover:bg-white hover:text-green-800 transition duration-300"
         onClick={handlePurchase}
         >
           Buy Now

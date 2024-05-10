@@ -26,34 +26,70 @@ export const ShoppingCartProvider = ({ children }) => {
     const newCartProducts = cartProducts.filter((i) => i.id !== id);
     setCartProducts(newCartProducts);
   };
+  
+  const updateCount = () => {
+    let totalCount = 0;
+    cartProducts.forEach(product => {
+        totalCount += product.quantity;
+    });
+    setCount(totalCount);
+
+    updateCount();
+};
+
   const removeProductFromCart = (productId) => {
-    const itemFound = cartProducts.find((i) => i.id === productId);
-    if (itemFound.quantity > 1) {
-      const updatedItem = { ...itemFound };
-      updatedItem.quantity -= 1;
-      const updatedCartProducts = cartProducts.map((item) =>
-        item.productId === productId ? updatedItem : item
-      );
-      setCartProducts(updatedCartProducts);
-    } else {
-      const updatedCartProducts = cartProducts.filter((product) => product.id !== productId);
-      setCartProducts(updatedCartProducts);
-    }
-    setCount(count - 1);
+    const updatedCartProducts = cartProducts.filter((product) => product.id !== productId);
+    setCartProducts(updatedCartProducts);
+
+    const newCount = updatedCartProducts.reduce((total, product) => total + product.quantity, 0);
+    setCount(newCount);
+  
+    setCartProducts(updatedCartProducts);
+    // Actualiza la orden eliminando el ítem correspondiente
+    const updatedOrder = order.map((orderItem) => ({
+      ...orderItem,
+      Products: orderItem.Products.filter((product) => product.id !== productId)
+    }));
+setOrder(updatedOrder);
+
+    // Actualiza el contador de productos
+  //   const productToRemove = cartProducts.find((product) => product.id === productId);
+  //   console.log("productToRemove", productToRemove);
+  // if (productToRemove) {
+  //   setCount((prevCount) => prevCount - productToRemove.quantity);
+  // }
+   };
+
+  const clearCart = () => {
+    setCartProducts([]);
+
+    setCount(0);
+  };
+
+  const deleteOrder = () => {
+    setOrder([]);
   };
 
   // Añadir un producto al carrito o incrementar su cantidad
   const addProductToCart = (productToAdd) => {
-    const existingProduct = cartProducts.find(p => p.id === productToAdd.id);
-    
+    const existingProduct = cartProducts.find((p) => p.id === productToAdd.id);
+  
     if (existingProduct) {
-        // Incrementa la cantidad si el producto ya está en el carrito
-        existingProduct.quantity += 1;
+      // Incrementa la cantidad si el producto ya está en el carrito
+      existingProduct.quantity += 1;
     } else {
-        // Añade el producto al carrito con una cantidad inicial
-        setCartProducts([...cartProducts, { ...productToAdd, quantity: 1 }]);
+      // Añade el producto al carrito con una cantidad inicial
+      setCartProducts([...cartProducts, { ...productToAdd, quantity: 1 }]);
+
+        // Incrementa el contador
+  setCount((prevCount) => prevCount + 1);
     }
-};
+
+     // Actualiza la orden para reflejar los cambios
+     const updatedOrder = [...order];
+     updatedOrder[0].Products.push({ ...productToAdd, quantity: 1 });
+     setOrder(updatedOrder);
+   };
 
 // Shooping Cart - Order
 const [order, setOrder] = useState([]);
@@ -74,12 +110,15 @@ const purchase = () => {
 }
 
 const addOrder = (products) => {
+  // Add the new order to the existing orders
   setOrder([...order, { Products: products }]);
 };
 
-const clearCart = () => {
-  setCartProducts([]);
+
+const updateOrder = () => {
+  setOrder(cartProducts);
 };
+
 
   return (
     <ShoppingCartContext.Provider
@@ -106,6 +145,10 @@ const clearCart = () => {
         purchase,
         addOrder,
         clearCart,
+        updateOrder,
+        deleteOrder,
+        updateCount,
+
       }}
     >
       {children}
