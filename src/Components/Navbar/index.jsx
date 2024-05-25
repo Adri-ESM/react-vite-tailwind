@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { ShoppingCartContext } from "../../Context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,21 +6,19 @@ import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { generateUniqueKey } from "../utils/index.js";
 
 const Navbar = () => {
+  const { openCart } = useContext(ShoppingCartContext);
   const context = useContext(ShoppingCartContext);
   const activeStyle = "underline underline-thickness-thin underline-offset-4";
 
-  const openProductModal = () => {
-    context.openCart();
-  };
 
   // Función para actualizar el contador al eliminar productos
-  // const updateCountOnRemove = () => {
-  //   let totalCount = 0;
-  //   context.cartProducts.forEach(product => {
-  //     totalCount += product.quantity;
-  //   });
-  //   return totalCount;
-  // };
+  const updateCountOnRemove = () => {
+    let totalCount = 0;
+    context.cartProducts.forEach(product => {
+      totalCount += product.quantity;
+    });
+    return totalCount;
+  };
 
   return (
     <nav className="flex justify-between bg-white items-center top-0 fixed z-10 w-full py-5 px-8 text-sm font-light">
@@ -98,9 +96,9 @@ const Navbar = () => {
           <FontAwesomeIcon
              icon={faShoppingCart}
              className="w-6 h-6 text-gray- cursor-pointer"
-             onClick={openProductModal}
+             onClick={openCart}
           />
-           {context.count}
+          <span>{context.count}</span>
           
           
        

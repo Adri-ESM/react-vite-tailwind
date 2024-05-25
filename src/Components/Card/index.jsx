@@ -16,11 +16,15 @@ const Card = (data) => {
   };
 
   const addProductsToCart = (productData) => {
-    if (isProductInCart) return;  // Si el producto ya está en el carrito, no hacemos nada.
-
-    const newProduct = { ...productData, cartItemId: generateUniqueKey() }; // Asignar una clave única
-    context.setCount(context.count + 1);
+    if (isProductInCart) return;  // If the product is already in the cart, do nothing.
+  
+    const newProduct = {
+      ...productData,
+      cartItemId: generateUniqueKey(), // Assigning a unique key
+      quantity: 1  // Ensure to set quantity when adding a new product
+    };
     context.setCartProducts([...context.cartProducts, newProduct]);
+    context.setCount(context.count + 1);
   };
 
  
