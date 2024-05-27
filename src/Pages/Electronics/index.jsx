@@ -2,6 +2,7 @@ import { useApiData } from "../../ContextApi/index";
 import Layout from "../../Components/Layout";
 import Card from "../../Components/Card";
 import Cart from "../../Components/Cart";
+import ProductDetail from "../../Components/ProductDetail";
 
 function Electronics() {
   const apiData = useApiData();
@@ -25,6 +26,7 @@ function Electronics() {
           />
         ))}
       </div>
+      <ProductDetail />
       <Cart />
     </Layout>
   );

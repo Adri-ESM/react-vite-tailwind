@@ -6,6 +6,14 @@ import "./styles.css";
 
 export default function ProductDetail() {
   const context = useContext(ShoppingCartContext);
+  const isProductInCart = context.cartProducts.some(product => product.id === context.productShowing.id);
+
+  const handleAddProductToCart = () => {
+    if (!isProductInCart) {
+      context.addProductToCart(context.productShowing);
+    }
+  };
+
 
   return (
     <aside
@@ -43,12 +51,12 @@ export default function ProductDetail() {
         <span>{context.productShowing.description}</span>
       </p>
       <div className="flex items-center justify-between w-full py-3 px-5">
-        {/* <span className="text-lg font-bold text-gray-800">$129.99</span> */}
-        <button
-          className="px-3 py-1 text-sm font-semibold text-white bg-gray-800 rounded"
-          onClick={() => context.setCount(context.count + 1)}
+      <button
+          className={`px-3 py-1 text-sm font-semibold text-white ${isProductInCart ? 'bg-gray-500' : 'bg-gray-800'} rounded`}
+          onClick={handleAddProductToCart}
+          disabled={isProductInCart}
         >
-          Add to Cart
+          {isProductInCart ? 'In Cart' : 'Add to Cart'}
         </button>
       </div>
     </aside>

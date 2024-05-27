@@ -2,7 +2,6 @@ import { createContext, useState } from "react";
 import PropTypes from 'prop-types';
 
 export const ShoppingCartContext = createContext({});
-//import { useState, useEffect } from "react";
 
 export const ShoppingCartProvider = ({ children }) => {
   // Shooping Cart - total
@@ -35,7 +34,7 @@ export const ShoppingCartProvider = ({ children }) => {
     });
   };
 
-  
+
 // ------------------- REMOVE PRODUCT FROM CART -------------------
 const removeProductFromCart = (productId) => {
   setCartProducts(prevProducts => {

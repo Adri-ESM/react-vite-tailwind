@@ -3,31 +3,24 @@ import { ShoppingCartContext } from "../../Context";
 import style from "./Card.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faCheck } from "@fortawesome/free-solid-svg-icons";
-import { generateUniqueKey } from "../utils/index.js";
+
 
 const Card = (data) => {
   const context = useContext(ShoppingCartContext);
-
   const isProductInCart = context.cartProducts.some(product => product.id === data.data.id);
+  
 
   const showProductDetail = (productDetail) => {
     context.openProductDetail();
     context.setProductShowing(productDetail);
   };
 
-  const addProductsToCart = (productData) => {
-    if (isProductInCart) return;  // If the product is already in the cart, do nothing.
-  
-    const newProduct = {
-      ...productData,
-      cartItemId: generateUniqueKey(), // Assigning a unique key
-      quantity: 1  // Ensure to set quantity when adding a new product
-    };
-    context.setCartProducts([...context.cartProducts, newProduct]);
-    context.setCount(context.count + 1);
+  const handleAddProductClick = (product) => {
+    // Solo añadir el producto si no está en el carrito
+    if (!isProductInCart) {
+      context.addProductToCart(product);
+    }
   };
-
- 
 
   return (
     <div className="bg-white cursor-pointer w-56 h-60 mb-10">
@@ -45,7 +38,7 @@ const Card = (data) => {
     ${isProductInCart ? 'bg-white hover:bg-red-600 hover:text-white' : 'bg-white hover:bg-green-500 hover:text-white'}`}>
     <FontAwesomeIcon
         icon={isProductInCart ? faCheck : faPlus}
-        onClick={() => addProductsToCart(data.data)}
+         onClick={() => handleAddProductClick(data.data)}
     />
 </div>
 
