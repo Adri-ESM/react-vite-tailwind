@@ -1,5 +1,5 @@
 import Layout from "../../Components/Layout";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import OrderCard from "../../Components/OrderCard";
 import { useContext } from "react";
 import { ShoppingCartContext } from "../../Context";
@@ -10,8 +10,8 @@ function MyOrder() {
   const context = useContext(ShoppingCartContext);
   const cartHasItems = context.order?.length > 0 && context.order[0]?.Products;
   const cartHasItems2 = context.order?.length > 0 && context.order[0]?.Products;
-  const currentPath = window.location.pathname;
-  const index = currentPath.substring(currentPath.lastIndexOf("/") + 1);
+  //const currentPath = window.location.pathname;
+  //const index = currentPath.substring(currentPath.lastIndexOf("/") + 1);
  
 
   // const latestOrder = context.order?.slice(-1)[0];

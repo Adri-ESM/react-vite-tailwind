@@ -22,13 +22,20 @@ export default function Cart() {
   };
   
   const handlePurchase = () => {
-    // Generate a new order with the products in the cart
-    context.addOrder([...context.cartProducts]);
-    // Close the cart
+    // Limpia la orden existente antes de añadir una nueva
+    context.clearOrders();
+    // Genera una nueva orden con los productos en el carrito
+    if (context.cartProducts.length > 0) {
+        context.addOrder(context.cartProducts);
+      } else {
+        alert("there are not products in the cart.");
+        return;
+    }
+    // Cierra el carrito
     context.closeCart();
-    // Navigate to the my-order page
+    // Navega a la página de 'my-order'
     navigate('/my-order');
-  };
+};
 
   return (
     <aside

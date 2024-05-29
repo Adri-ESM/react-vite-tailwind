@@ -102,9 +102,10 @@ const Navbar = () => {
           
           
        
-        {context.cartProducts.map((product) => (
+        {context.cartProducts.map((product, index) => (
           <div
-            key={product.cartItemId || generateUniqueKey()}  
+            //key={product.cartItemId || generateUniqueKey()}  
+            key={product.id + '-' + index}
             onClick={() => {
               context.removeProductFromCart(product.id);
               const newCount = updateCountOnRemove();
