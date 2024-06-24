@@ -4,50 +4,70 @@ import { ShoppingCartContext } from "../../Context";
 import { useContext } from "react";
 import OrderCard from "../../Components/OrderCard";
 import Back from "../../Components/Back";
-import Cart from "../../Components/Cart";
+//import Cart from "../../Components/Cart";
 import "./styles.css";
 
 function MyOrders() {
-    const context = useContext(ShoppingCartContext);
-    console.log(context.order);
-   
+  const { orders } = useContext(ShoppingCartContext);
+
   return (
-        <div>
-            <Back />
-        <Layout>
-      <h1 className="mt-20">My Orders</h1>
-    {
-        context.order.map((order, index) => (
-          <Link key={index} to="/my-orders/${index}">  
-      <OrderCard 
-        totalPrice={order.totalPrice} 
-        totalProducts={order.totalProducts} />
-        </Link>
-        ))
-      }
-      {/* <div className="mt-20 flex flex-col w-80">
-        {context.order?.length > 0 && context.order[0]?.Products ? (
-          context.order[0].Products.map((product) => (
+    <Layout>
+      <Back />
+      <h1 className="mt-20 font-semibold">My Orders</h1>
+      {orders.map(order => (
+        <div key={order.id} className="mb-4">
+          <Link to={`/my-orders/${order.id}`}>
             <OrderCard
-              key={product.id}
-              id={product.id}
-              image={product.image}
-              title={product.title}
-              price={product.price}
+              id={order.id}
+              title={`Order ID: ${order.id}`}
+              totalPrice={order.totalPrice}
+              totalProducts={order.totalProducts}
               showDeleteIcon={false}
             />
-          ))
-        ) : (
-          <div className="flex justify-center items-center h-96">
-            { <h2 className="text-1xl">You don&apos;t have any orders yet</h2> }
-          </div>
-        )}
-      
-      </div> */}
-       <Cart />
+          </Link>
+        </div>
+      ))}
+       
     </Layout>
-    </div>
-  )
+  );
 }
 
 export default MyOrders;
+
+//MY PRDERS GUARADDO RECIENTEMENTE
+// import Layout from "../../Components/Layout";
+// import { Link } from "react-router-dom";
+// import { ShoppingCartContext } from "../../Context";
+// import { useContext } from "react";
+// import OrderCard from "../../Components/OrderCard";
+// import Back from "../../Components/Back";
+// //import Cart from "../../Components/Cart";
+// import "./styles.css";
+
+// function MyOrders() {
+//     const context = useContext(ShoppingCartContext);
+   
+   
+//   return (
+//         <div>
+//             <Back />
+//         <Layout>
+//       <h1 className="mt-20 font-semibold">My Orders</h1>
+//     {
+//         context.order.map((order) => (
+//           <Link key={order.id} to="/my-orders/${order.id}">  
+//           <p className="text-m mt-10 font-semibold">Order {order.id}</p>
+//       <OrderCard 
+//         totalPrice={order.totalPrice} 
+//         totalProducts={order.totalProducts} 
+//         showDeleteIcon={false} />
+//         </Link>
+//         ))
+//       }
+//     </Layout>
+
+//     </div>
+//   )
+// }
+
+// export default MyOrders;
