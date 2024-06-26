@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { ShoppingCartContext } from "../../Context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import { generateUniqueKey } from "../utils/index.js";
+//import { generateUniqueKey } from "../utils/index.js";
 
 const Navbar = () => {
   const { openCart } = useContext(ShoppingCartContext);

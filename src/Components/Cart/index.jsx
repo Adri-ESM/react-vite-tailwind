@@ -24,78 +24,49 @@ export default function Cart() {
 
   const handlePurchase = () => {
     if (context.cartProducts.length > 0) {
-      context.addOrder(context.cartProducts);
-      // context.clearCart(); // Remove this line if you do not want to clear the cart automatically
-      navigate('/my-orders'); // Navigate to the orders page to see all orders
+      const newOrderId = context.addOrder(context.cartProducts);
+      navigate(`/my-orders/${newOrderId}`); // Navigate to the new order details page
     } else {
       alert("No products in the cart to add to an order.");
     }
   };
 
   return (
-    <aside
-      className={`${
-        context.isCartOpen ? "flex" : "hidden"
-      } cart-products-container scrollable-cards  flex-col fixed right-0 border border-black rounded-lg bg-white $`}
-    >
+    <aside className={`${context.isCartOpen ? "flex" : "hidden"} cart-products-container scrollable-cards flex-col fixed right-0 border border-black rounded-lg bg-white`}>
       <div className="flex justify-between items-center p-6">
         <h2 className="font-medium text-xl">Shopping Cart</h2>
-        <div className="">
-          <FontAwesomeIcon
-            className="text-2xl cursor-pointer"
-            icon={faTimes}
-            onClick={context.closeCart}
-          />
+        <div>
+          <FontAwesomeIcon className="text-2xl cursor-pointer" icon={faTimes} onClick={context.closeCart} />
         </div>
       </div>
       <div className="flex items-center p-6">
-      <div className="text-xl justify-around font-semibold text-gray-800 ml-6">
-          Order
-        </div>
+        <div className="text-xl justify-around font-semibold text-gray-800 ml-6">Order</div>
         <div className="flex items-center justify-around w-full py-3">
-          <button className="px-3 py-1 text-sm w-25 font-semibold text-white bg-gray-800 rounded hover:bg-white hover:text-gray-800 transition duration-300"
-        onClick={handleDelete}
-        >
-          Clear Cart
-        </button>
-          </div>
+          <button className="px-3 py-1 text-sm w-25 font-semibold text-white bg-gray-800 rounded hover:bg-white hover:text-gray-800 transition duration-300" onClick={handleDelete}>
+            Clear Cart
+          </button>
+        </div>
       </div>
-          
       <div>
         {context.cartProducts.map((product) => (
-          <OrderCard
-            key={product.id}
-            id={product.id}
-            image={product.image}
-            title={product.title}
-            price={product.price}
-          />
+          <OrderCard key={product.id} id={product.id} image={product.image} title={product.title} price={product.price} />
         ))}
       </div>
-
       <div className="w-full py-3 px-5 mt-4">
         <div className="flex justify-between">
-        <div className="text-lg font-bold text-gray-800">Total to Pay:</div>
-        <div className="text-lg font-semibold text-gray-800">${totalPrice(context.cartProducts)}</div>
+          <div className="text-lg font-bold text-gray-800">Total to Pay:</div>
+          <div className="text-lg font-semibold text-gray-800">${totalPrice(context.cartProducts)}</div>
         </div>
       </div>
-      
       <div className="flex items-center justify-around w-full py-3">
-      <Link to="/">
-        <button
-          className="px-3 py-1 text-sm font-semibold text-white bg-gray-800 rounded hover:bg-white hover:text-gray-800 transition duration-300"
-          onClick={context.closeCart}
-        >
-          Continue Shopping
-        </button>
+        <Link to="/">
+          <button className="px-3 py-1 text-sm font-semibold text-white bg-gray-800 rounded hover:bg-white hover:text-gray-800 transition duration-300" onClick={context.closeCart}>
+            Continue Shopping
+          </button>
         </Link>
-        <Link to="/my-order">
-        <button className="px-3 py-1 text-sm w-25 font-semibold text-white bg-gray-800 rounded hover:bg-white hover:text-green-800 transition duration-300"
-        onClick={handlePurchase}
-        >
+        <button className="px-3 py-1 text-sm w-25 font-semibold text-white bg-gray-800 rounded hover:bg-white hover:text-green-800 transition duration-300" onClick={handlePurchase}>
           Buy Now
         </button>
-        </Link>
       </div>
     </aside>
   );
@@ -108,7 +79,7 @@ export default function Cart() {
 // };
 
 
-//CARRITO GUARDADO RECIENTEMENTE
+//CARRITO GUARDADO RECIENTEMENTE HOY MARTES 25 JUNIO
 // import { useContext } from "react";
 // import { Link, useNavigate } from "react-router-dom";
 // import { ShoppingCartContext } from "../../Context";
@@ -122,6 +93,7 @@ export default function Cart() {
 // export default function Cart() {
 //   const context = useContext(ShoppingCartContext);
 //   const navigate = useNavigate();
+//   //const purchase = context.purchase;
 
 //   const handleDelete = () => {
 //     // Clear the cart
@@ -131,24 +103,17 @@ export default function Cart() {
 //     // Close the cart
 //     context.closeCart();
 //   };
-  
+
 //   const handlePurchase = () => {
-//     // Limpia la orden existente antes de añadir una nueva
-//     context.clearOrders();
-//     // Genera una nueva orden con los productos en el carrito
 //     if (context.cartProducts.length > 0) {
-//     context.addOrder(context.cartProducts);
+//       context.addOrder(context.cartProducts);
+//       // context.clearCart(); // Remove this line if you do not want to clear the cart automatically
+//       navigate('/my-orders'); // Navigate to the orders page to see all orders
 //     } else {
-//     alert("there are not products in the cart.");
-//     return;
+//       alert("No products in the cart to add to an order.");
 //     }
-//     // Cierra el carrito
-//     context.closeCart();
-//     // Navega a la página de 'my-order'
-//     navigate('/my-order');
-    
-//     };
-    
+//   };
+
 //   return (
 //     <aside
 //       className={`${

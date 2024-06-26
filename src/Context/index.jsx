@@ -124,6 +124,7 @@ const addOrder = (products) => {
   };
   setOrders(prevOrders => [...prevOrders, newOrder]); // Ensure using `setOrders`
   //setCartProducts([]); // Clear the cart after adding the order
+    return newOrderId; // Return the new order ID
 };
 
 const purchase = () => {
@@ -161,10 +162,14 @@ const completeOrder = (orderId) => {
   );
 };
 
+// const deleteOrder = (orderId) => {
+//   setOrder(prevOrders =>
+//     prevOrders.filter(order => order.id !== orderId || order.status !== 'Complete')
+//   );
+// };
+
 const deleteOrder = (orderId) => {
-  setOrder(prevOrders =>
-    prevOrders.filter(order => order.id !== orderId || order.status !== 'Complete')
-  );
+  setOrders(prevOrders => prevOrders.filter(order => order.id !== orderId));
 };
 
   return (

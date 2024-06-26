@@ -13,7 +13,9 @@ function MyOrders() {
   return (
     <Layout>
       <Back />
-      <h1 className="mt-20 font-semibold">My Orders</h1>
+      <div className="flex flex-col items-center mt-4">
+        <h1 className="mt-4 mb-5 font-semibold">My Orders</h1>
+      </div>
       {orders.map(order => (
         <div key={order.id} className="mb-4">
           <Link to={`/my-orders/${order.id}`}>
@@ -23,6 +25,9 @@ function MyOrders() {
               totalPrice={order.totalPrice}
               totalProducts={order.totalProducts}
               showDeleteIcon={false}
+              showImage={false} 
+              showDeleteOrder={false}
+              showOutstandingLabel={order.status === 'Pending Payment'}
             />
           </Link>
         </div>
@@ -34,7 +39,7 @@ function MyOrders() {
 
 export default MyOrders;
 
-//MY PRDERS GUARADDO RECIENTEMENTE
+//MY ORDERS GUARADDO RECIENTEMENTE miercoles 26 junio
 // import Layout from "../../Components/Layout";
 // import { Link } from "react-router-dom";
 // import { ShoppingCartContext } from "../../Context";
@@ -45,29 +50,33 @@ export default MyOrders;
 // import "./styles.css";
 
 // function MyOrders() {
-//     const context = useContext(ShoppingCartContext);
-   
-   
-//   return (
-//         <div>
-//             <Back />
-//         <Layout>
-//       <h1 className="mt-20 font-semibold">My Orders</h1>
-//     {
-//         context.order.map((order) => (
-//           <Link key={order.id} to="/my-orders/${order.id}">  
-//           <p className="text-m mt-10 font-semibold">Order {order.id}</p>
-//       <OrderCard 
-//         totalPrice={order.totalPrice} 
-//         totalProducts={order.totalProducts} 
-//         showDeleteIcon={false} />
-//         </Link>
-//         ))
-//       }
-//     </Layout>
+//   const { orders } = useContext(ShoppingCartContext);
 
-//     </div>
-//   )
+//   return (
+//     <Layout>
+//       <Back />
+//       <div className="flex flex-col items-center mt-4">
+//         <h1 className="mt-4 mb-5 font-semibold">My Orders</h1>
+//       </div>
+//       {orders.map(order => (
+//         <div key={order.id} className="mb-4">
+//           <Link to={`/my-orders/${order.id}`}>
+//             <OrderCard
+//               id={order.id}
+//               title={`Order ID: ${order.id}`}
+//               totalPrice={order.totalPrice}
+//               totalProducts={order.totalProducts}
+//               showDeleteIcon={false}
+//               showImage={false} 
+//               showDeleteOrder={false}
+//               showOutstandingLabel={order.status === 'Pending Payment'}
+//             />
+//           </Link>
+//         </div>
+//       ))}
+       
+//     </Layout>
+//   );
 // }
 
 // export default MyOrders;
