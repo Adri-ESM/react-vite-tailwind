@@ -90,29 +90,17 @@ const [orderCount, setOrderCount] = useState();
 const [order, setOrder] = useState([]);
 const [orders, setOrders] = useState([]);
 
-
-
-const clearOrders = () => {
-  setOrder([]);
-};
-
-const generateOrderId = () => {
-  const randomNumber = Math.floor(Math.random() * 1000); // Generates a random number up to 6 digits
-  const date = new Date();
-  const formattedDate = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}`;
-  return `As${randomNumber.toString().padStart(3, '0')}Ef-${formattedDate}`;
-};
-
 // const addOrder = (products) => {
 //   const newOrderId = generateOrderId(); // Obtiene un nuevo ID único
 //   setOrder(prevOrders => [...prevOrders, { id: newOrderId, Products: products }]);
 //   // This adds the new order to the list of existing orders, each with a unique ID
 // };
 
+
 const addOrder = (products) => {
   if (products.length === 0) {
     console.error("No products to add to the order.");
-    return;
+    return null; // return null if no products
   }
   const newOrderId = generateOrderId(); // Generates a new unique ID
   const newOrder = {
@@ -136,6 +124,25 @@ const purchase = () => {
   }
 };
 
+// const deleteOrder = (orderId) => {
+//   setOrder(prevOrders =>
+//     prevOrders.filter(order => order.id !== orderId || order.status !== 'Complete')
+//   );
+// };
+
+const deleteOrder = (orderId) => {
+  setOrders(prevOrders => prevOrders.filter(order => order.id !== orderId));
+};
+const clearOrders = () => {
+  setOrder([]);
+};
+
+const generateOrderId = () => {
+  const randomNumber = Math.floor(Math.random() * 1000); // Generates a random number up to 6 digits
+  const date = new Date();
+  const formattedDate = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}`;
+  return `As${randomNumber.toString().padStart(3, '0')}Ef-${formattedDate}`;
+};
 
 // case 'CLEAR_ORDERS':
 //     return {
@@ -162,15 +169,7 @@ const completeOrder = (orderId) => {
   );
 };
 
-// const deleteOrder = (orderId) => {
-//   setOrder(prevOrders =>
-//     prevOrders.filter(order => order.id !== orderId || order.status !== 'Complete')
-//   );
-// };
 
-const deleteOrder = (orderId) => {
-  setOrders(prevOrders => prevOrders.filter(order => order.id !== orderId));
-};
 
   return (
     <ShoppingCartContext.Provider
