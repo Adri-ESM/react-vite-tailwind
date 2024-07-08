@@ -1,9 +1,11 @@
 import Layout from "../../Components/Layout";
+import Back from "../../Components/Back";
 
 function NotFound() {
   return (
     <Layout>
-      <h1>Coming Soon!</h1>
+        <Back />
+      <h1 className= 'mt-20'>You don't have any order</h1>
     </Layout>
   );
 }

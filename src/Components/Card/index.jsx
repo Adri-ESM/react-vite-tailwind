@@ -2,12 +2,13 @@ import { useContext } from "react";
 import { ShoppingCartContext } from "../../Context";
 import style from "./Card.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 
 const Card = (data) => {
   const context = useContext(ShoppingCartContext);
   const isProductInCart = context.cartProducts.some(product => product.id === data.data.id);
+  const isProductInOrders = context.isProductInOrders(data.data.id);
   
 
   const showProductDetail = (productDetail) => {
@@ -16,6 +17,10 @@ const Card = (data) => {
   };
 
   const handleAddProductClick = (product) => {
+    if (isProductInOrders) {
+      alert('This product is already in an order and cannot be added again.');
+      return;
+    }
     // Solo añadir el producto si no está en el carrito
     if (!isProductInCart) {
       context.addProductToCart(product);
@@ -35,13 +40,12 @@ const Card = (data) => {
           onClick={() => showProductDetail(data.data)} 
         />
 <div className={`absolute top-0 right-0 flex justify-center items-center w-6 h-6 rounded-full m-2 p-1 
-    ${isProductInCart ? 'bg-white hover:bg-red-600 hover:text-white' : 'bg-white hover:bg-green-500 hover:text-white'}`}>
-    <FontAwesomeIcon
-        icon={isProductInCart ? faCheck : faPlus}
-         onClick={() => handleAddProductClick(data.data)}
-    />
-</div>
-
+          ${isProductInOrders ? 'bg-white hover:bg-red-600 hover:text-white' : isProductInCart ? 'bg-white hover:bg-red-600 hover:text-white' : 'bg-white hover:bg-green-500 hover:text-white'}`}>
+          <FontAwesomeIcon
+            icon={isProductInCart || isProductInOrders ? faTimes : faCheck}
+            onClick={() => handleAddProductClick(data.data)}
+          />
+        </div>
       </figure>
 
       <p className="flex justify-between mr-2">

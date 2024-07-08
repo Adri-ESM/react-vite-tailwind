@@ -1,5 +1,7 @@
-import { useRoutes, BrowserRouter } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import { ShoppingCartProvider } from "../../Context";
+import { ApiDataProvider } from "../../ContextApi"; // Asegúrate de importar correctamente
 import Navbar from "../../Components/Navbar";
 import Home from "../Home";
 import MyAccount from "../MyAccount";
@@ -13,64 +15,53 @@ import SignIn from "../SignIn";
 import Cart from "../../Components/Cart";
 import "../../App.css";
 
-const AppRoutes = () => {
-  let routes = useRoutes([
-    {
-      path: "/",
-      element: <Home />,
-    },
-    {
-      path: "/my-account",
-      element: <MyAccount />,
-    },
-    {
-      path: "/my-order/:orderId",
-      element: <MyOrder />,
-    },
-    {
-      path: "/my-orders",
-      element: <MyOrders />,
-    },
-    {
-      path: "/sign-in",
-      element: <SignIn />,
-    },
-    {
-      path: "/cart",
-      element: <Cart />,
-    },
-    {
-      path: "/clothes",
-      element: <Clothes />,
-    },
-    {
-      path: "/electronics",
-      element: <Electronics />,
-    },
-    {
-      path: "/jewelry",
-      element: <Jewelry />,
-    },
-    {
-      path: "/*",
-      element: <NotFound />,
-    },
-  ]);
-  return routes;
+const RedirectHomeOnMount = () => {
+  const navigate = useNavigate();
+  const [redirected, setRedirected] = useState(false);
+
+  useEffect(() => {
+    if (!redirected) {
+      navigate("/");
+      setRedirected(true);
+    }
+  }, [navigate, redirected]);
+
+  return null;
 };
+
+const AppRoutes = () => (
+  <Routes>
+    <Route path="/" element={<Home />} />
+    <Route path="/my-account" element={<MyAccount />} />
+    <Route path="/my-order/:orderId" element={<MyOrder />} />
+    <Route path="/my-orders" element={<MyOrders />} />
+    <Route path="/sign-in" element={<SignIn />} />
+    <Route path="/cart" element={<Cart />} />
+    <Route path="/clothes" element={<Clothes />} />
+    <Route path="/electronics" element={<Electronics />} />
+    <Route path="/jewelry" element={<Jewelry />} />
+    <Route path="/*" element={<NotFound />} />
+  </Routes>
+);
 
 const App = () => {
   return (
-    <ShoppingCartProvider>
-      <BrowserRouter>
-        <AppRoutes />
-        <Navbar />
-      </BrowserRouter>
-    </ShoppingCartProvider>
+    <React.StrictMode>
+      <ApiDataProvider>
+        <ShoppingCartProvider>
+          <BrowserRouter>
+            <RedirectHomeOnMount />
+            <Navbar />
+            <AppRoutes />
+          </BrowserRouter>
+        </ShoppingCartProvider>
+      </ApiDataProvider>
+    </React.StrictMode>
   );
 };
 
 export default App;
+
 
 
 

@@ -73,7 +73,7 @@ const Navbar = () => {
             to="/my-orders"
             className={({ isActive }) => (isActive ? activeStyle : undefined)}
           >
-            All My Orders
+            My Orders
           </NavLink>
         </li>
         <li>

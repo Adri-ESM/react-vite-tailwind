@@ -14,7 +14,6 @@ export default function ProductDetail() {
     }
   };
 
-
   return (
     <aside
       className={`${
