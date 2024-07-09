@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import PropTypes from 'prop-types';
 import { useApiData } from '../ContextApi'; // Importa tu contexto de API
 
@@ -29,36 +29,57 @@ export const ShoppingCartProvider = ({ children }) => {
   const [order, setOrder] = useState([]);
   const [orders, setOrders] = useState([]);
 
-  //Get Products
+    // Effect to load orders once on component mount
+    useEffect(() => {
+      const storedCartProducts = localStorage.getItem('cartProducts');
+      if (storedCartProducts) {
+        setCartProducts(JSON.parse(storedCartProducts));
+      }
+      const storedOrders = localStorage.getItem('orders');
+      if (storedOrders) {
+        setOrders(JSON.parse(storedOrders));
+      }
+    }, []);
+  
+    useEffect(() => {
+      localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
+    }, [cartProducts]);
+  
+    useEffect(() => {
+      if (orders.length > 0) {
+        localStorage.setItem('orders', JSON.stringify(orders));
+      }
+    }, [orders]);
+
+      // Get Products By Title
   const [items, setItems] = useState([]);
 
-  useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
-      .then((res) => res.json())
-      .then((data) => setItems(data)); //data puede ser otro nombre por ej. json
-  }, []);
-
-  // Effect to load orders once on component mount
-  useEffect(() => {
-    const storedCartProducts = localStorage.getItem('cartProducts');
-    if (storedCartProducts) {
-      setCartProducts(JSON.parse(storedCartProducts));
-    }
-    const storedOrders = localStorage.getItem('orders');
-    if (storedOrders) {
-      setOrders(JSON.parse(storedOrders));
-    }
-  }, []);
+  // Filtra los productos por título
+  const [filteredItems, setFilteredItems] = useState([]);
+  const [searchByTitle, setSearchByTitle] = useState("");
+  const [sortOrder, setSortOrder] = useState("none");
 
   useEffect(() => {
-    localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
-  }, [cartProducts]);
-
-  useEffect(() => {
-    if (orders.length > 0) {
-      localStorage.setItem('orders', JSON.stringify(orders));
+    let filtered = items;
+    if (searchByTitle !== "") {
+      filtered = filtered.filter((item) =>
+        item.title.toLowerCase().includes(searchByTitle.toLowerCase())
+      );
     }
-  }, [orders]);
+    if (sortOrder === "asc") {
+      filtered = filtered.sort((a, b) => a.price - b.price);
+    } else if (sortOrder === "desc") {
+      filtered = filtered.sort((a, b) => b.price - a.price);
+    }
+    setFilteredItems(filtered);
+  }, [items, searchByTitle, sortOrder]);
+
+
+    useEffect(() => {
+      setItems(apiData);  // Actualiza items cuando apiData cambie
+    }, [apiData]);
+
+
 
   const generateOrderId = () => {
     const randomNumber = Math.floor(Math.random() * 1000); // Genera un número aleatorio de hasta 3 dígitos
@@ -69,14 +90,6 @@ export const ShoppingCartProvider = ({ children }) => {
     const formattedDate = `${year}${month}${day}`; // Formatea la fecha
     return `As${randomNumber.toString().padStart(3, '0')}Ef-${formattedDate}`; // Devuelve el ID de la orden
   };
-
-  // const updateCount = () => {
-  //   setCartProducts(currentProducts => {
-  //     const totalCount = currentProducts.reduce((total, product) => total + (product.quantity || 0), 0);
-  //     setCount(totalCount);  // Actualiza el contador basado en los productos actuales
-  //     return currentProducts;  // Devuelve los productos sin modificar el estado
-  //   });
-  // };
 
   const updateCount = (products) => {
     const totalCount = products.reduce((total, product) => total + (product.quantity || 0), 0);
@@ -159,7 +172,6 @@ export const ShoppingCartProvider = ({ children }) => {
     }
   };
 
-  //const addProductToCart = (productToAdd) => handleCartActions('ADD_PRODUCT', productToAdd);
   const addProductToCart = (productToAdd) => {
     if (isProductInOrders(productToAdd.id)) {
       alert('This product is already in an order and cannot be added again.');
@@ -219,6 +231,12 @@ export const ShoppingCartProvider = ({ children }) => {
         isProductInOrders,
         items,
         setItems,
+        searchByTitle,
+        setSearchByTitle,
+        filteredItems,
+        setFilteredItems,
+        sortOrder,
+        setSortOrder,
       }}
     >
       {children}
@@ -237,10 +255,12 @@ export default ShoppingCartProvider;
 //NUEVA VERSIÓN CON SWITCH CASE GUARDADA RECIENTEMENTE 3 JULIO 24
 // import { createContext, useState, useEffect } from "react";
 // import PropTypes from 'prop-types';
+// import { useApiData } from '../ContextApi'; // Importa tu contexto de API
 
 // export const ShoppingCartContext = createContext({});
 
 // export const ShoppingCartProvider = ({ children }) => {
+//   const apiData = useApiData(); // Obtén los datos de la API desde el contexto
 //   // Shooping Cart - total
 //   const [shoppingCart, setShoppingCart] = useState([]);
 //   const [count, setCount] = useState(0);
@@ -264,19 +284,33 @@ export default ShoppingCartProvider;
 //   const [order, setOrder] = useState([]);
 //   const [orders, setOrders] = useState([]);
 
-//   // Effect to load orders once on component mount
-//   useEffect(() => {
-//     const storedOrders = localStorage.getItem('orders');
-//     if (storedOrders) {
-//       setOrders(JSON.parse(storedOrders));
-//     }
-//   }, []);
+//   // Get Products By Title
+//   const [items, setItems] = useState([]);
+//   const [search, setSearch] = useState("");
 
-//   useEffect(() => {
-//     if (orders.length > 0) {
-//       localStorage.setItem('orders', JSON.stringify(orders));
-//     }
-//   }, [orders]);
+//     // Effect to load orders once on component mount
+//     useEffect(() => {
+//       const storedCartProducts = localStorage.getItem('cartProducts');
+//       if (storedCartProducts) {
+//         setCartProducts(JSON.parse(storedCartProducts));
+//       }
+//       const storedOrders = localStorage.getItem('orders');
+//       if (storedOrders) {
+//         setOrders(JSON.parse(storedOrders));
+//       }
+//     }, []);
+  
+//     useEffect(() => {
+//       localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
+//     }, [cartProducts]);
+  
+//     useEffect(() => {
+//       if (orders.length > 0) {
+//         localStorage.setItem('orders', JSON.stringify(orders));
+//       }
+//     }, [orders]);
+  
+
 
 //   const generateOrderId = () => {
 //     const randomNumber = Math.floor(Math.random() * 1000); // Genera un número aleatorio de hasta 3 dígitos
@@ -288,39 +322,45 @@ export default ShoppingCartProvider;
 //     return `As${randomNumber.toString().padStart(3, '0')}Ef-${formattedDate}`; // Devuelve el ID de la orden
 //   };
 
-//   const updateCount = () => {
-//     setCartProducts(currentProducts => {
-//       const totalCount = currentProducts.reduce((total, product) => total + (product.quantity || 0), 0);
-//       setCount(totalCount);  // Actualiza el contador basado en los productos actuales
-//       return currentProducts;  // Devuelve los productos sin modificar el estado
-//     });
+//   // const updateCount = () => {
+//   //   setCartProducts(currentProducts => {
+//   //     const totalCount = currentProducts.reduce((total, product) => total + (product.quantity || 0), 0);
+//   //     setCount(totalCount);  // Actualiza el contador basado en los productos actuales
+//   //     return currentProducts;  // Devuelve los productos sin modificar el estado
+//   //   });
+//   // };
+
+//   const updateCount = (products) => {
+//     const totalCount = products.reduce((total, product) => total + (product.quantity || 0), 0);
+//     setCount(totalCount);
 //   };
 
 //   const handleCartActions = (actionType, payload) => {
 //     switch (actionType) {
 //       case 'ADD_PRODUCT': {
 //         const existingProduct = cartProducts.find(p => p.id === payload.id);
+//         let newCartProducts;
 //         if (existingProduct) {
-//           const newCartProducts = cartProducts.map(p =>
+//           newCartProducts = cartProducts.map(p =>
 //             p.id === payload.id ? { ...p, quantity: (p.quantity || 0) + 1 } : p
 //           );
-//           setCartProducts(newCartProducts);
 //         } else {
-//           setCartProducts([...cartProducts, { ...payload, quantity: 1 }]);
+//           newCartProducts = [...cartProducts, { ...payload, quantity: 1 }];
 //         }
-//         updateCount();
+//         setCartProducts(newCartProducts);
+//         updateCount(newCartProducts);
 //         break;
 //       }
 //       case 'REMOVE_PRODUCT': {
 //         const updatedCartProducts = cartProducts.filter(product => product.id !== payload);
-//         const newCount = updatedCartProducts.reduce((total, product) => total + (product.quantity || 0), 0);
-//         setCount(newCount);
 //         setCartProducts(updatedCartProducts);
+//         updateCount(updatedCartProducts);
 //         break;
 //       }
 //       case 'ERASE_ITEM': {
 //         const newCartProducts = cartProducts.filter((i) => i.id !== payload.id);
 //         setCartProducts(newCartProducts);
+//         updateCount(newCartProducts);
 //         break;
 //       }
 //       case 'CLEAR_CART': {
@@ -346,6 +386,8 @@ export default ShoppingCartProvider;
 //           totalProducts: payload.length
 //         };
 //         setOrders([newOrder, ...orders]);
+//         setCartProducts([]);
+//         setCount(0);
 //         return newOrderId;
 //       }
 //       case 'DELETE_ORDER': {
@@ -369,7 +411,15 @@ export default ShoppingCartProvider;
 //     }
 //   };
 
-//   const addProductToCart = (productToAdd) => handleCartActions('ADD_PRODUCT', productToAdd);
+//   //const addProductToCart = (productToAdd) => handleCartActions('ADD_PRODUCT', productToAdd);
+//   const addProductToCart = (productToAdd) => {
+//     if (isProductInOrders(productToAdd.id)) {
+//       alert('This product is already in an order and cannot be added again.');
+//       return;
+//     }
+//     handleCartActions('ADD_PRODUCT', productToAdd);
+//   };
+
 //   const removeProductFromCart = (productId) => handleCartActions('REMOVE_PRODUCT', productId);
 //   const eraserItem = (id) => handleCartActions('ERASE_ITEM', id);
 //   const clearCart = () => handleCartActions('CLEAR_CART');
@@ -379,9 +429,14 @@ export default ShoppingCartProvider;
 //   const clearOrders = () => handleOrderActions('CLEAR_ORDERS');
 //   const completeOrder = (orderId) => handleOrderActions('COMPLETE_ORDER', orderId);
 
+//   const isProductInOrders = (productId) => {
+//     return orders.some(order => order.Products.some(product => product.id === productId));
+//   };
+
 //   return (
 //     <ShoppingCartContext.Provider
 //       value={{
+//         products: apiData,
 //         shoppingCart,
 //         setShoppingCart,
 //         count,
@@ -413,6 +468,11 @@ export default ShoppingCartProvider;
 //         completeOrder,
 //         orders,
 //         setOrders,
+//         isProductInOrders,
+//         items,
+//         setItems,
+//         search,
+//         setSearch,
 //       }}
 //     >
 //       {children}
