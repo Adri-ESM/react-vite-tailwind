@@ -1,12 +1,15 @@
-import { createContext, useState, useEffect, useContext } from "react";
+import { createContext, useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 import { useApiData } from '../ContextApi'; // Importa tu contexto de API
+import { useFilteredData } from '../ContextFilter'; // Importa tu contexto de filtro
 
 export const ShoppingCartContext = createContext({});
 
 export const ShoppingCartProvider = ({ children }) => {
   const apiData = useApiData(); // Obtén los datos de la API desde el contexto
-  // Shooping Cart - total
+  const { filteredItems } = useFilteredData(); // Obtén los datos filtrados desde el contexto
+
+  // Shopping Cart - total
   const [shoppingCart, setShoppingCart] = useState([]);
   const [count, setCount] = useState(0);
 
@@ -24,71 +27,40 @@ export const ShoppingCartProvider = ({ children }) => {
   const openCart = () => setIsCartOpen(true);
   const closeCart = () => setIsCartOpen(false);
 
-  // Shooping Cart - Order
+  // Shopping Cart - Order
   const [orderCount, setOrderCount] = useState(0);
   const [order, setOrder] = useState([]);
   const [orders, setOrders] = useState([]);
 
-    // Effect to load orders once on component mount
-    useEffect(() => {
-      const storedCartProducts = localStorage.getItem('cartProducts');
-      if (storedCartProducts) {
-        setCartProducts(JSON.parse(storedCartProducts));
-      }
-      const storedOrders = localStorage.getItem('orders');
-      if (storedOrders) {
-        setOrders(JSON.parse(storedOrders));
-      }
-    }, []);
-  
-    useEffect(() => {
-      localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
-    }, [cartProducts]);
-  
-    useEffect(() => {
-      if (orders.length > 0) {
-        localStorage.setItem('orders', JSON.stringify(orders));
-      }
-    }, [orders]);
-
-      // Get Products By Title
-  const [items, setItems] = useState([]);
-
-  // Filtra los productos por título
-  const [filteredItems, setFilteredItems] = useState([]);
-  const [searchByTitle, setSearchByTitle] = useState("");
-  const [sortOrder, setSortOrder] = useState("none");
+  useEffect(() => {
+    const storedCartProducts = localStorage.getItem('cartProducts');
+    if (storedCartProducts) {
+      setCartProducts(JSON.parse(storedCartProducts));
+    }
+    const storedOrders = localStorage.getItem('orders');
+    if (storedOrders) {
+      setOrders(JSON.parse(storedOrders));
+    }
+  }, []);
 
   useEffect(() => {
-    let filtered = items;
-    if (searchByTitle !== "") {
-      filtered = filtered.filter((item) =>
-        item.title.toLowerCase().includes(searchByTitle.toLowerCase())
-      );
+    localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
+  }, [cartProducts]);
+
+  useEffect(() => {
+    if (orders.length > 0) {
+      localStorage.setItem('orders', JSON.stringify(orders));
     }
-    if (sortOrder === "asc") {
-      filtered = filtered.sort((a, b) => a.price - b.price);
-    } else if (sortOrder === "desc") {
-      filtered = filtered.sort((a, b) => b.price - a.price);
-    }
-    setFilteredItems(filtered);
-  }, [items, searchByTitle, sortOrder]);
-
-
-    useEffect(() => {
-      setItems(apiData);  // Actualiza items cuando apiData cambie
-    }, [apiData]);
-
-
+  }, [orders]);
 
   const generateOrderId = () => {
-    const randomNumber = Math.floor(Math.random() * 1000); // Genera un número aleatorio de hasta 3 dígitos
+    const randomNumber = Math.floor(Math.random() * 1000);
     const date = new Date();
-    const year = date.getFullYear().toString().slice(-2); // Obtiene los dos últimos dígitos del año
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Obtiene el mes y agrega un cero a la izquierda si es necesario
-    const day = date.getDate().toString().padStart(2, '0'); // Obtiene el día y agrega un cero a la izquierda si es necesario
-    const formattedDate = `${year}${month}${day}`; // Formatea la fecha
-    return `As${randomNumber.toString().padStart(3, '0')}Ef-${formattedDate}`; // Devuelve el ID de la orden
+    const year = date.getFullYear().toString().slice(-2);
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    const formattedDate = `${year}${month}${day}`;
+    return `As${randomNumber.toString().padStart(3, '0')}Ef-${formattedDate}`;
   };
 
   const updateCount = (products) => {
@@ -197,6 +169,7 @@ export const ShoppingCartProvider = ({ children }) => {
     <ShoppingCartContext.Provider
       value={{
         products: apiData,
+        filteredItems,
         shoppingCart,
         setShoppingCart,
         count,
@@ -229,14 +202,6 @@ export const ShoppingCartProvider = ({ children }) => {
         orders,
         setOrders,
         isProductInOrders,
-        items,
-        setItems,
-        searchByTitle,
-        setSearchByTitle,
-        filteredItems,
-        setFilteredItems,
-        sortOrder,
-        setSortOrder,
       }}
     >
       {children}
@@ -252,7 +217,8 @@ export default ShoppingCartProvider;
 
 
 
-//NUEVA VERSIÓN CON SWITCH CASE GUARDADA RECIENTEMENTE 3 JULIO 24
+
+//GUARDADO RECIENTEMENTE 10 DE JULIO 2024
 // import { createContext, useState, useEffect } from "react";
 // import PropTypes from 'prop-types';
 // import { useApiData } from '../ContextApi'; // Importa tu contexto de API
@@ -284,10 +250,6 @@ export default ShoppingCartProvider;
 //   const [order, setOrder] = useState([]);
 //   const [orders, setOrders] = useState([]);
 
-//   // Get Products By Title
-//   const [items, setItems] = useState([]);
-//   const [search, setSearch] = useState("");
-
 //     // Effect to load orders once on component mount
 //     useEffect(() => {
 //       const storedCartProducts = localStorage.getItem('cartProducts');
@@ -309,7 +271,35 @@ export default ShoppingCartProvider;
 //         localStorage.setItem('orders', JSON.stringify(orders));
 //       }
 //     }, [orders]);
-  
+
+//       // Get Products By Title
+//   const [items, setItems] = useState([]);
+
+//   // Filtra los productos por título
+//   const [filteredItems, setFilteredItems] = useState([]);
+//   const [searchByTitle, setSearchByTitle] = useState("");
+//   const [sortOrder, setSortOrder] = useState("none");
+
+//   useEffect(() => {
+//     let filtered = items;
+//     if (searchByTitle !== "") {
+//       filtered = filtered.filter((item) =>
+//         item.title.toLowerCase().includes(searchByTitle.toLowerCase())
+//       );
+//     }
+//     if (sortOrder === "asc") {
+//       filtered = filtered.sort((a, b) => a.price - b.price);
+//     } else if (sortOrder === "desc") {
+//       filtered = filtered.sort((a, b) => b.price - a.price);
+//     }
+//     setFilteredItems(filtered);
+//   }, [items, searchByTitle, sortOrder]);
+
+
+//     useEffect(() => {
+//       setItems(apiData);  // Actualiza items cuando apiData cambie
+//     }, [apiData]);
+
 
 
 //   const generateOrderId = () => {
@@ -321,14 +311,6 @@ export default ShoppingCartProvider;
 //     const formattedDate = `${year}${month}${day}`; // Formatea la fecha
 //     return `As${randomNumber.toString().padStart(3, '0')}Ef-${formattedDate}`; // Devuelve el ID de la orden
 //   };
-
-//   // const updateCount = () => {
-//   //   setCartProducts(currentProducts => {
-//   //     const totalCount = currentProducts.reduce((total, product) => total + (product.quantity || 0), 0);
-//   //     setCount(totalCount);  // Actualiza el contador basado en los productos actuales
-//   //     return currentProducts;  // Devuelve los productos sin modificar el estado
-//   //   });
-//   // };
 
 //   const updateCount = (products) => {
 //     const totalCount = products.reduce((total, product) => total + (product.quantity || 0), 0);
@@ -411,7 +393,6 @@ export default ShoppingCartProvider;
 //     }
 //   };
 
-//   //const addProductToCart = (productToAdd) => handleCartActions('ADD_PRODUCT', productToAdd);
 //   const addProductToCart = (productToAdd) => {
 //     if (isProductInOrders(productToAdd.id)) {
 //       alert('This product is already in an order and cannot be added again.');
@@ -471,8 +452,12 @@ export default ShoppingCartProvider;
 //         isProductInOrders,
 //         items,
 //         setItems,
-//         search,
-//         setSearch,
+//         searchByTitle,
+//         setSearchByTitle,
+//         filteredItems,
+//         setFilteredItems,
+//         sortOrder,
+//         setSortOrder,
 //       }}
 //     >
 //       {children}
@@ -487,7 +472,7 @@ export default ShoppingCartProvider;
 // export default ShoppingCartProvider;
 
 
-// VERSIÓN ANTERIOR SIN SWITCH CASE (TAMBIÉN FUNCIONA BIEN PERO ES MÁS LARGO Y MENOS ORGANIZADO)
+// VERSIÓN ANTERIOR SIN SWITCH CASE (YA NO FUNCIONA PORQUE AGREGUE MAS FUNCIONALIDADES AL ANTERIOR, ES EJEMPLO PORQUE ES MÁS LARGO Y MENOS ORGANIZADO)
 // import { createContext, useState, useEffect } from "react";
 // import PropTypes from 'prop-types';
 

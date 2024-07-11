@@ -3,3 +3,11 @@
        display: contents;
     }
 }
+
+.relative {
+    z-index: 10;
+  }
+  
+.absolute {
+    z-index: 20;
+  }

@@ -26,7 +26,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="flex justify-between bg-white items-center top-0 fixed z-10 w-full py-5 px-8 text-sm font-light">
+    <nav className="flex justify-between bg-white items-center top-0 fixed z-20 w-full py-5 px-8 text-sm font-light">
       <div className="flex items-center">
         <button className="text-gray-500 focus:outline-none md:hidden" onClick={toggleMenu}>
           <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} className="w-6 h-6" />

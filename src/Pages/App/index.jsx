@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import { ShoppingCartProvider } from "../../Context";
-import { ApiDataProvider } from "../../ContextApi"; // Asegúrate de importar correctamente
+import { ApiDataProvider } from "../../ContextApi";
+import { FilteredProvider } from "../../ContextFilter"; // Importa tu contexto de filtro
 import Navbar from "../../Components/Navbar";
 import Home from "../Home";
 import MyAccount from "../MyAccount";
@@ -48,21 +49,21 @@ const App = () => {
   return (
     <React.StrictMode>
       <ApiDataProvider>
-        <ShoppingCartProvider>
-          <BrowserRouter>
-            <RedirectHomeOnMount />
-            <Navbar />
-            <AppRoutes />
-          </BrowserRouter>
-        </ShoppingCartProvider>
+        <FilteredProvider>
+          <ShoppingCartProvider>
+            <BrowserRouter>
+              <RedirectHomeOnMount />
+              <Navbar />
+              <AppRoutes />
+            </BrowserRouter>
+          </ShoppingCartProvider>
+        </FilteredProvider>
       </ApiDataProvider>
     </React.StrictMode>
   );
 };
 
 export default App;
-
-
 
 
 
