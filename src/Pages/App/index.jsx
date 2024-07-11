@@ -54,6 +54,7 @@ const App = () => {
             <BrowserRouter>
               <RedirectHomeOnMount />
               <Navbar />
+              <Cart />
               <AppRoutes />
             </BrowserRouter>
           </ShoppingCartProvider>

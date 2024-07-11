@@ -18,53 +18,55 @@ export const FilteredProvider = ({ children }) => {
         item.title.toLowerCase().includes(searchByTitle.toLowerCase())
       );
     }
-    //Aqui condiciones para filtrar solo por titulo
+    if (items !== "") {
+        filtered = filtered.filter((item) =>
+          item.title.toLowerCase().includes(searchByTitle.toLowerCase())
+        );
+    }
+    if (sortOrder === "asc") {
+        filtered = filtered.sort((a, b) => a.price - b.price);
+      } else if (sortOrder === "desc") {
+        filtered = filtered.sort((a, b) => b.price - a.price);
+      }
+      setFilteredItems(filtered);
+    }, [items, searchByTitle, sortOrder]);
+  
+    react.useEffect(() => {
+      setItems(apiData);
+    }, [apiData]);
+  
+    return (
+      <FilteredDataContext.Provider 
+        value={{
+          filteredItems,
+          setFilteredItems,
+          items,
+          setItems,
+          searchByTitle,
+          setSearchByTitle,
+          sortOrder,
+          setSortOrder,
+        }}
+      >
+        {children}
+      </FilteredDataContext.Provider>
+    );
+  };
+  
+  FilteredProvider.propTypes = {
+    children: PropTypes.node.isRequired,
+  };
+  
+  export const useFilteredData = () => {
+    return react.useContext(FilteredDataContext);
+  };
+  
+  export default FilteredProvider;
+
+
+ //Aqui condiciones para filtrar solo por titulo
     // if (searchByTitle !== "") {
     //     filtered = filtered.filter((item) =>
     //       item.title.toLowerCase().includes(searchByTitle.toLowerCase())
     //     );
     //   }
-      if (items !== "") {
-        filtered = filtered.filter((item) =>
-          item.title.toLowerCase().includes(searchByTitle.toLowerCase())
-        );
-      }
-    if (sortOrder === "asc") {
-      filtered = filtered.sort((a, b) => a.price - b.price);
-    } else if (sortOrder === "desc") {
-      filtered = filtered.sort((a, b) => b.price - a.price);
-    }
-    setFilteredItems(filtered);
-  }, [items, searchByTitle, sortOrder]);
-
-  react.useEffect(() => {
-    setItems(apiData);
-  }, [apiData]);
-
-  return (
-    <FilteredDataContext.Provider 
-      value={{
-        filteredItems,
-        setFilteredItems,
-        items,
-        setItems,
-        searchByTitle,
-        setSearchByTitle,
-        sortOrder,
-        setSortOrder,
-      }}
-    >
-      {children}
-    </FilteredDataContext.Provider>
-  );
-};
-
-FilteredProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-export const useFilteredData = () => {
-  return react.useContext(FilteredDataContext);
-};
-
-export default FilteredProvider;

@@ -6,7 +6,7 @@ import { faShoppingCart, faBars, faTimes } from "@fortawesome/free-solid-svg-ico
 //import { generateUniqueKey } from "../utils/index.js";
 
 const Navbar = () => {
-  const { openCart } = useContext(ShoppingCartContext);
+  const { openCart, count } = useContext(ShoppingCartContext);
   const context = useContext(ShoppingCartContext);
   const activeStyle = "underline underline-thickness-thin underline-offset-4";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -114,7 +114,7 @@ const Navbar = () => {
               className="w-6 h-6 text-gray-500 cursor-pointer"
               onClick={openCart}
             />
-            <span>{context.count}</span>
+            <span>{count}</span>
           </li>
         </div>
         <div className="hidden md:flex md:items-center gap-3">
@@ -191,7 +191,7 @@ const Navbar = () => {
               className="w-6 h-6 text-gray-500 cursor-pointer"
               onClick={openCart}
             />
-            <span>{context.count}</span>
+            <span>{context.cartProducts.length}</span>
           
        
         {context.cartProducts.map((product, index) => (

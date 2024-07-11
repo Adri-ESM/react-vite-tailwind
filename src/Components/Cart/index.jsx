@@ -6,7 +6,7 @@ import { useNavigate, Link } from "react-router-dom";
 import OrderCard from "../OrderCard";
 import "./styles.css";
 
-export default function Cart() {
+const Cart = () => {
   const context = useContext(ShoppingCartContext);
   const navigate = useNavigate();
 
@@ -27,7 +27,7 @@ export default function Cart() {
   };
 
   return (
-    <aside className={`${context.isCartOpen ? "flex" : "hidden"} cart-products-container scrollable-cards flex-col fixed right-0 border border-black rounded-lg bg-white`}>
+    <aside className={`${context.isCartOpen ? "flex" : "hidden"} cart-products-container scrollable-cards flex-col fixed right-0 border border-black rounded-lg bg-white z-20`}>
       <div className="flex justify-between items-center p-6">
         <h2 className="font-medium text-xl">Shopping Cart</h2>
         <div>
@@ -65,7 +65,11 @@ export default function Cart() {
       </div>
     </aside>
   );
-}
+};
+
+export default Cart;
+
+
 
 
 // Cart.propTypes = {
