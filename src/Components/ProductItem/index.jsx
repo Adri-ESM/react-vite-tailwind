@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { ShoppingCartContext } from '../../Context';
+import { ShoppingCartContext } from '../../Contexts/Context';
 
 function ProductItem({ product }) {
   const { addProductToCart, isProductInOrders } = useContext(ShoppingCartContext);

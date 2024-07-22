@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Layout from "../../Components/Layout";
-import { useFilteredData } from '../../ContextFilter'; // Importa el contexto de filtro
+import { useFilteredData } from '../../Contexts/ContextFilter'; // Importa el contexto de filtro
 import Card from "../../Components/Card";
 import style from "./Home.module.css";
 import ProductDetail from "../../Components/ProductDetail";

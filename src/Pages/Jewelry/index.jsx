@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useFilteredData } from '../../ContextFilter';
+import { useFilteredData } from '../../Contexts/ContextFilter';
 import Layout from "../../Components/Layout";
 import Card from "../../Components/Card";
 import Cart from "../../Components/Cart";

@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import PropTypes from 'prop-types';
-import { useApiData } from '../ContextApi'; // Importa tu contexto de API
-import { useFilteredData } from '../ContextFilter'; // Importa tu contexto de filtro
+import { useApiData } from '../../Contexts/ContextApi'; // Importa tu contexto de API
+import { useFilteredData } from '../../Contexts/ContextFilter'; // Importa tu contexto de filtro
 
 export const ShoppingCartContext = createContext({});
 

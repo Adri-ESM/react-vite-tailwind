@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
-import { ShoppingCartProvider } from "../../Context";
-import { ApiDataProvider } from "../../ContextApi";
-import { FilteredProvider } from "../../ContextFilter"; // Importa tu contexto de filtro
+import { ShoppingCartProvider } from "../../Contexts/Context";
+import { ApiDataProvider } from "../../Contexts/ContextApi";
+import { FilteredProvider } from "../../Contexts/ContextFilter"; // Importa tu contexto de filtro
 import Navbar from "../../Components/Navbar";
 import Home from "../Home";
 import MyAccount from "../MyAccount";

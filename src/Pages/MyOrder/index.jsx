@@ -1,6 +1,6 @@
 import { useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ShoppingCartContext } from '../../Context';
+import { ShoppingCartContext } from '../../Contexts/Context';
 import { Link } from "react-router-dom";
 import Layout from '../../Components/Layout';
 import Back from '../../Components/Back';

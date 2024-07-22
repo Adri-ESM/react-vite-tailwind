@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { ShoppingCartContext } from "../../Context";
+import { ShoppingCartContext } from "../../Contexts/Context";
 import OrderCard from "./OrderCard";
 
 export default function OrdersList() {

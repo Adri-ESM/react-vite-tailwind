@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useFilteredData } from '../../ContextFilter';
+import { useFilteredData } from '../../Contexts/ContextFilter';
 import Layout from "../../Components/Layout";
 import Card from "../../Components/Card";
 import Cart from "../../Components/Cart";
@@ -18,7 +18,7 @@ function Clothes() {
   return (
     <Layout>
       <Filters />
-      <div className="flex flex-wrap justify-center space-x-4 w-full p-10">
+      <div className={`flex flex-wrap justify-center space-x-4 w-full p-10`}>
         {filteredItems.map((item) => (
           <Card
             key={item.id}

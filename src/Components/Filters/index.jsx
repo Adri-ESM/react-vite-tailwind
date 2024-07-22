@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useFilteredData } from '../../ContextFilter';
+import { useFilteredData } from '../../Contexts/UseFilteredData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
 
