@@ -1,24 +1,25 @@
-import { useApiData } from "../../ContextApi/index";
+import { useEffect } from 'react';
+import { useFilteredData } from '../../ContextFilter';
 import Layout from "../../Components/Layout";
 import Card from "../../Components/Card";
 import Cart from "../../Components/Cart";
 import ProductDetail from "../../Components/ProductDetail";
+import Filters from '../../Components/Filters';  // Asegúrate de que la ruta de importación es correcta
 
 function Clothes() {
-  const apiData = useApiData();
+  const { filteredItems, setCategory } = useFilteredData();  // Usar items ya filtrados desde el contexto
 
-
-  const clothingItems = apiData.filter(
-    (item) =>
-      item.category === "men's clothing" || item.category === "women's clothing"
-  );
+  useEffect(() => {
+    // Establece las categorías específicas al montar el componente
+    setCategory("men's clothing");
+    setCategory("women's clothing");
+  }, [setCategory]);
 
   return (
     <Layout>
-      <div
-        className={`flex flex-wrap justify-center space-x-4 w-full p-10`}
-      >
-        {clothingItems.map((item) => (
+      <Filters />
+      <div className="flex flex-wrap justify-center space-x-4 w-full p-10">
+        {filteredItems.map((item) => (
           <Card
             key={item.id}
             data={item}

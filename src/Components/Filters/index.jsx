@@ -1,12 +1,18 @@
-// src/Components/FilterBar.jsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useFilteredData } from '../../ContextFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
 
-const FilterBar = () => {
-  const { searchByTitle, setSearchByTitle, setSortOrder } = useFilteredData();
+const Filters = () => {
+  const { searchByTitle, setSearchByTitle, setSortOrder, setCategory } = useFilteredData();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    setCategory("men's clothing");
+    setCategory("women's clothing");
+    setCategory("electronics");
+    setCategory("jewelery");
+  }, [setCategory]);
 
   const handleSearchChange = (event) => {
     setSearchByTitle(event.target.value);
@@ -14,7 +20,7 @@ const FilterBar = () => {
 
   const handleSortOrderChange = (order) => {
     setSortOrder(order);
-    setDropdownOpen(false); // Close the dropdown immediately after selection
+    setDropdownOpen(false);
   };
 
   const toggleDropdown = () => {
@@ -23,12 +29,12 @@ const FilterBar = () => {
 
   return (
     <div className="sticky top-14 bg-white z-10 flex flex-col sm:flex-row justify-center items-center mb-4 sm:space-x-2 p-4">
-      <input 
+      <input
         type="text"
         placeholder="Search products..."
         value={searchByTitle}
         onChange={handleSearchChange}
-        className="p-2 border rounded flex-grow sm:w-auto mb-2 sm:mb-0 focus:outline-none focus:ring-0"
+        className="p-2 border rounded flex-grow sm:w-auto mb-2 sm:mb-0"
       />
       <div className="relative">
         <button
@@ -58,4 +64,5 @@ const FilterBar = () => {
   );
 };
 
-export default FilterBar;
+export default Filters;
+
