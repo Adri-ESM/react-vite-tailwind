@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useFilteredData } from '../../Contexts/UseFilteredData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
+import { faDollarSign, faBroom } from '@fortawesome/free-solid-svg-icons';
 
 const Filters = () => {
   const { searchByTitle, setSearchByTitle, setSortOrder, setCategory } = useFilteredData();
@@ -23,6 +23,11 @@ const Filters = () => {
     setDropdownOpen(false);
   };
 
+  const handleClearFilters = () => {
+    setSearchByTitle("");
+    setSortOrder("none");
+  }
+
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
@@ -37,12 +42,20 @@ const Filters = () => {
         className="p-2 border rounded flex-grow sm:w-auto mb-2 sm:mb-0"
       />
       <div className="relative">
-        <button
-          className="p-2 border rounded hidden sm:block"
-          onClick={toggleDropdown}
-        >
-          <FontAwesomeIcon icon={faDollarSign} />
-        </button>
+      <div className="flex space-x-2">
+          <button
+            className="p-2 border rounded hidden sm:block"
+            onClick={toggleDropdown}
+          >
+            <FontAwesomeIcon icon={faDollarSign} />
+          </button>
+          <button
+        className="p-2 border rounded hidden sm:block"
+        onClick={handleClearFilters}
+      >
+        <FontAwesomeIcon icon={faBroom} />
+      </button>
+      </div>
         {dropdownOpen && (
           <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg">
             <button
@@ -60,6 +73,7 @@ const Filters = () => {
           </div>
         )}
       </div>
+    
     </div>
   );
 };
