@@ -39,18 +39,18 @@ const Filters = () => {
         placeholder="Search products..."
         value={searchByTitle}
         onChange={handleSearchChange}
-        className="p-2 border rounded flex-grow sm:w-auto mb-2 sm:mb-0"
+        className="p-2 border rounded flex-grow sm:w-96 mb-2 sm:mb-0 focus:outline-none"
       />
       <div className="relative">
       <div className="flex space-x-2">
           <button
-            className="p-2 border rounded hidden sm:block"
+            className="p-2 border rounded hidden sm:block sm:w-10 transform transition-transform duration-300 hover:scale-110"
             onClick={toggleDropdown}
           >
             <FontAwesomeIcon icon={faDollarSign} />
           </button>
           <button
-        className="p-2 border rounded hidden sm:block"
+        className="p-2 border rounded hidden sm:block transform transition-transform duration-300 hover:scale-110"
         onClick={handleClearFilters}
       >
         <FontAwesomeIcon icon={faBroom} />
