@@ -45,17 +45,21 @@ const Navbar = () => {
       </div>
       <div className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'}`}>
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-          <NavLink to="/" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>Home</NavLink>
-          <NavLink to="/clothes" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>Clothes</NavLink>
-          <NavLink to="/electronics" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>Electronics</NavLink>
-          <NavLink to="/jewelry" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>Jewelry</NavLink>
-          <NavLink to="/my-order" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>My Order</NavLink>
-          <NavLink to="/my-orders" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>My Orders</NavLink>
-          <NavLink to="/my-account" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>My Account</NavLink>
-          <NavLink to="/sign-in" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>Sign In</NavLink>
-          <div className="flex items-center">
-            <FontAwesomeIcon icon={faShoppingCart} className="w-6 h-6 text-gray-500 cursor-pointer" onClick={openCart} />
-            <span>{count}</span>
+          <div className="flex flex-col space-y-1">
+            <NavLink to="/" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>Home</NavLink>
+            <NavLink to="/clothes" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>Clothes</NavLink>
+            <NavLink to="/electronics" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>Electronics</NavLink>
+            <NavLink to="/jewelry" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>Jewelry</NavLink>
+          </div>
+          <div className="flex flex-col space-y-1">
+            <NavLink to="/my-order" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>My Order</NavLink>
+            <NavLink to="/my-orders" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>My Orders</NavLink>
+            <NavLink to="/my-account" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>My Account</NavLink>
+            <NavLink to="/sign-in" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>Sign In</NavLink>
+            <div className="flex items-center">
+              <FontAwesomeIcon icon={faShoppingCart} className="w-6 h-6 text-gray-500 cursor-pointer" onClick={openCart} />
+              <span>{count}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -64,6 +68,7 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
 
 
 
