@@ -57,7 +57,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      <div className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'}`}>
+      <div className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'} bg-white z-30 relative`}>
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           <div className="flex flex-col space-y-1">
             <NavLink to="/" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>Home</NavLink>
@@ -82,6 +82,7 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
 
 
 
