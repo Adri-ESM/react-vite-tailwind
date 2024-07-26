@@ -11,8 +11,7 @@ function Clothes() {
 
   useEffect(() => {
     // Establece las categorías específicas al montar el componente
-    setCategory("men's clothing");
-    setCategory("women's clothing");
+    setCategory(["men's clothing", "women's clothing"]);
   }, [setCategory]);
 
   return (

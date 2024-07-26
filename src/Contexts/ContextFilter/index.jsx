@@ -10,7 +10,7 @@ export const FilteredProvider = ({ children }) => {
   const [filteredItems, setFilteredItems] = useState([]);
   const [searchByTitle, setSearchByTitle] = useState("");
   const [sortOrder, setSortOrder] = useState("none");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState([]);
 
   useEffect(() => {
     let filtered = items;
@@ -20,10 +20,10 @@ export const FilteredProvider = ({ children }) => {
         item.title.toLowerCase().includes(searchByTitle.toLowerCase())
       );
     }
-    if (category) {
-        filtered = filtered.filter((item) =>
-          item.category === category
-        );
+    if (category.length > 0) {
+      filtered = filtered.filter(item =>
+        category.includes(item.category)
+      );
     }
     if (sortOrder === "asc") {
         filtered = filtered.sort((a, b) => a.price - b.price);
