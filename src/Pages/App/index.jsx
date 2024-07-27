@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import { ShoppingCartProvider } from "../../Contexts/Context";
 import { ApiDataProvider } from "../../Contexts/ContextApi";
-import { FilteredProvider } from "../../Contexts/ContextFilter"; // Importa tu contexto de filtro
+import { FilteredProvider } from "../../Contexts/ContextFilter"; 
+import PrivateRoute from "../../Components/PrivateRoute";
+import { AuthProvider } from "../../Contexts/AuthProvider";
 import Navbar from "../../Components/Navbar";
 import Home from "../Home";
 import MyAccount from "../MyAccount";
@@ -12,6 +14,7 @@ import NotFound from "../NotFound";
 import Clothes from "../Clothes";
 import Electronics from "../Electronics";
 import Jewelry from "../Jewelry";
+import Login from "../Login";
 import SignIn from "../SignIn";
 import Cart from "../../Components/Cart";
 import "../../App.css";
@@ -31,40 +34,45 @@ const RedirectHomeOnMount = () => {
 };
 
 const AppRoutes = () => (
-  <Routes>
-    <Route path="/" element={<Home />} />
-    <Route path="/my-account" element={<MyAccount />} />
-    <Route path="/my-order/:orderId" element={<MyOrder />} />
-    <Route path="/my-orders" element={<MyOrders />} />
-    <Route path="/sign-in" element={<SignIn />} />
-    <Route path="/cart" element={<Cart />} />
-    <Route path="/clothes" element={<Clothes />} />
-    <Route path="/electronics" element={<Electronics />} />
-    <Route path="/jewelry" element={<Jewelry />} />
-    <Route path="/*" element={<NotFound />} />
-  </Routes>
+  <AuthProvider>
+    <Routes>
+      <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
+      <Route path="/my-account" element={<PrivateRoute><MyAccount /></PrivateRoute>} />
+      <Route path="/my-order/:orderId" element={<PrivateRoute><MyOrder /></PrivateRoute>} />
+      <Route path="/my-orders" element={<PrivateRoute><MyOrders /></PrivateRoute>} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/sign-in" element={<SignIn />} />
+      <Route path="/cart" element={<Cart />} />
+      <Route path="/clothes" element={<Clothes />} />
+      <Route path="/electronics" element={<Electronics />} />
+      <Route path="/jewelry" element={<Jewelry />} />
+      <Route path="/*" element={<NotFound />} />
+    </Routes>
+  </AuthProvider>
 );
 
 const App = () => {
   return (
-    <React.StrictMode>
-      <ApiDataProvider>
-        <FilteredProvider>
-          <ShoppingCartProvider>
-            <BrowserRouter>
-              <RedirectHomeOnMount />
-              <Navbar />
-              <Cart />
-              <AppRoutes />
-            </BrowserRouter>
-          </ShoppingCartProvider>
-        </FilteredProvider>
-      </ApiDataProvider>
-    </React.StrictMode>
+    <ApiDataProvider>
+      <FilteredProvider>
+        <ShoppingCartProvider>
+          <Router>
+            <RedirectHomeOnMount />
+            <Navbar />
+            <Cart />
+            <AppRoutes />
+          </Router>
+        </ShoppingCartProvider>
+      </FilteredProvider>
+    </ApiDataProvider>
   );
 };
 
 export default App;
+
+
+
+
 
 
 
