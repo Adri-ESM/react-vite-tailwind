@@ -1,16 +1,16 @@
 import { useContext } from "react";
 import { ShoppingCartContext } from "../../Contexts/Context";
-import { useAuth } from "../../Contexts/AuthProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from '../../Contexts/AuthProvider';
 import OrderCard from "../OrderCard";
 import "./styles.css";
 
 const Cart = () => {
   const context = useContext(ShoppingCartContext);
-  const { currentUser } = useAuth();
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
 
   const handleDelete = () => {
     context.clearCart();
@@ -19,10 +19,9 @@ const Cart = () => {
 
   const handlePurchase = () => {
     if (!currentUser) {
-      navigate("/sign-in");
+      navigate('/sign-in');
       return;
     }
-
     if (context.cartProducts.length > 0) {
       const newOrderId = context.addOrder(context.cartProducts);
       if (newOrderId) {
@@ -80,8 +79,10 @@ export default Cart;
 
 
 
+
 // import { useContext } from "react";
 // import { ShoppingCartContext } from "../../Contexts/Context";
+// import { useAuth } from "../../Contexts/AuthProvider";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faTimes } from "@fortawesome/free-solid-svg-icons";
 // import { useNavigate, Link } from "react-router-dom";
@@ -99,6 +100,11 @@ export default Cart;
 //   };
 
 //   const handlePurchase = () => {
+//     if (!currentUser) {
+//       navigate("/sign-in");
+//       return;
+//     }
+
 //     if (context.cartProducts.length > 0) {
 //       const newOrderId = context.addOrder(context.cartProducts);
 //       if (newOrderId) {

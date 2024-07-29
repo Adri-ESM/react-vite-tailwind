@@ -15,6 +15,7 @@ import Clothes from "../Clothes";
 import Electronics from "../Electronics";
 import Jewelry from "../Jewelry";
 import SignIn from "../SignIn";
+import SignUp from "../../Components/SignUp";
 import Cart from "../../Components/Cart";
 import "../../App.css";
 
@@ -36,6 +37,7 @@ const AppRoutes = () => (
   <AuthProvider>
     <Routes>\
       <Route path="/sign-in" element={<SignIn />} />
+      <Route path="/sign-up" element={<SignUp />} />
       <Route path="/" element={<Home />} />
       <Route path="/my-account" element={<PrivateRoute><MyAccount /></PrivateRoute>} />
       <Route path="/my-order" element={<PrivateRoute><MyOrder /></PrivateRoute>} />

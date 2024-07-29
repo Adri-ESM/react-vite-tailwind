@@ -1,10 +1,8 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
+import { getFirestore } from 'firebase/firestore';
 
-
-// Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyCJYyfQVVEqC-UDPv7HKtBlvmhjGUOXGNE",
     authDomain: "adri-s-shop.firebaseapp.com",
@@ -13,12 +11,16 @@ const firebaseConfig = {
     messagingSenderId: "42724334430",
     appId: "1:42724334430:web:6b59a8a56606bf4aa10dcf",
     measurementId: "G-53N90DB6G6"
-  };
+};
 
-  // Initialize Firebase
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 const analytics = getAnalytics(app);
+const db = getFirestore(app); // Initialize Firestore
 
-export { auth, googleProvider, createUserWithEmailAndPassword, signInWithPopup, analytics };
+export { auth, googleProvider, createUserWithEmailAndPassword, signInWithPopup, signInWithEmailAndPassword, analytics, db };
+
+
+
