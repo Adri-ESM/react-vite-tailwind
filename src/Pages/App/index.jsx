@@ -14,7 +14,6 @@ import NotFound from "../NotFound";
 import Clothes from "../Clothes";
 import Electronics from "../Electronics";
 import Jewelry from "../Jewelry";
-import Login from "../Login";
 import SignIn from "../SignIn";
 import Cart from "../../Components/Cart";
 import "../../App.css";
@@ -35,14 +34,14 @@ const RedirectHomeOnMount = () => {
 
 const AppRoutes = () => (
   <AuthProvider>
-    <Routes>
-      <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
+    <Routes>\
+      <Route path="/sign-in" element={<SignIn />} />
+      <Route path="/" element={<Home />} />
       <Route path="/my-account" element={<PrivateRoute><MyAccount /></PrivateRoute>} />
+      <Route path="/my-order" element={<PrivateRoute><MyOrder /></PrivateRoute>} />
       <Route path="/my-order/:orderId" element={<PrivateRoute><MyOrder /></PrivateRoute>} />
       <Route path="/my-orders" element={<PrivateRoute><MyOrders /></PrivateRoute>} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/sign-in" element={<SignIn />} />
-      <Route path="/cart" element={<Cart />} />
+      <Route path="/cart" element={<PrivateRoute><Cart /></PrivateRoute>} />
       <Route path="/clothes" element={<Clothes />} />
       <Route path="/electronics" element={<Electronics />} />
       <Route path="/jewelry" element={<Jewelry />} />
@@ -53,18 +52,20 @@ const AppRoutes = () => (
 
 const App = () => {
   return (
-    <ApiDataProvider>
-      <FilteredProvider>
-        <ShoppingCartProvider>
-          <Router>
-            <RedirectHomeOnMount />
-            <Navbar />
-            <Cart />
-            <AppRoutes />
-          </Router>
-        </ShoppingCartProvider>
-      </FilteredProvider>
-    </ApiDataProvider>
+    <AuthProvider>
+      <ApiDataProvider>
+        <FilteredProvider>
+          <ShoppingCartProvider>
+            <Router>
+              <RedirectHomeOnMount />
+              <Navbar />
+              <Cart />
+              <AppRoutes />
+            </Router>
+          </ShoppingCartProvider>
+        </FilteredProvider>
+      </ApiDataProvider>
+    </AuthProvider>
   );
 };
 

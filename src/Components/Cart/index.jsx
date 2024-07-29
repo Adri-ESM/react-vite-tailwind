@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { ShoppingCartContext } from "../../Contexts/Context";
+import { useAuth } from "../../Contexts/AuthProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, Link } from "react-router-dom";
@@ -8,6 +9,7 @@ import "./styles.css";
 
 const Cart = () => {
   const context = useContext(ShoppingCartContext);
+  const { currentUser } = useAuth();
   const navigate = useNavigate();
 
   const handleDelete = () => {
@@ -16,6 +18,11 @@ const Cart = () => {
   };
 
   const handlePurchase = () => {
+    if (!currentUser) {
+      navigate("/sign-in");
+      return;
+    }
+
     if (context.cartProducts.length > 0) {
       const newOrderId = context.addOrder(context.cartProducts);
       if (newOrderId) {
@@ -72,24 +79,18 @@ export default Cart;
 
 
 
-// Cart.propTypes = {
-//   title: PropTypes.string.isRequired,
-//   image: PropTypes.string.isRequired,
-//   price: PropTypes.number.isRequired,
-// };
 
-
-//CODIGO ORIGINAL GUARDADO PARA FUTURA REFERENCIA 3 JULIO 24
 // import { useContext } from "react";
-// import { Link, useNavigate } from "react-router-dom";
-// import { ShoppingCartContext } from "../../Context";
+// import { ShoppingCartContext } from "../../Contexts/Context";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faTimes } from "@fortawesome/free-solid-svg-icons";
+// import { useNavigate, Link } from "react-router-dom";
 // import OrderCard from "../OrderCard";
 // import "./styles.css";
 
-// export default function Cart() {
+// const Cart = () => {
 //   const context = useContext(ShoppingCartContext);
+//   const { currentUser } = useAuth();
 //   const navigate = useNavigate();
 
 //   const handleDelete = () => {
@@ -101,7 +102,6 @@ export default Cart;
 //     if (context.cartProducts.length > 0) {
 //       const newOrderId = context.addOrder(context.cartProducts);
 //       if (newOrderId) {
-//         //context.clearCart(); // Clear the cart after purchase
 //         navigate(`/my-order/${newOrderId}`);
 //       }
 //     } else {
@@ -110,7 +110,7 @@ export default Cart;
 //   };
 
 //   return (
-//     <aside className={`${context.isCartOpen ? "flex" : "hidden"} cart-products-container scrollable-cards flex-col fixed right-0 border border-black rounded-lg bg-white`}>
+//     <aside className={`${context.isCartOpen ? "flex" : "hidden"} cart-products-container scrollable-cards flex-col fixed right-0 border border-black rounded-lg bg-white z-20`}>
 //       <div className="flex justify-between items-center p-6">
 //         <h2 className="font-medium text-xl">Shopping Cart</h2>
 //         <div>
@@ -148,10 +148,15 @@ export default Cart;
 //       </div>
 //     </aside>
 //   );
-// }
-
-// Cart.propTypes = {
-//   title: PropTypes.string.isRequired,
-//   image: PropTypes.string.isRequired,
-//   price: PropTypes.number.isRequired,
 // };
+
+// export default Cart;
+
+
+
+
+// // Cart.propTypes = {
+// //   title: PropTypes.string.isRequired,
+// //   image: PropTypes.string.isRequired,
+// //   price: PropTypes.number.isRequired,
+// // };

@@ -83,6 +83,7 @@ export default Navbar;
 
 
 
+
 //ANTERIOR CON CART DENTRO DEL MENU
 // import { useContext, useState, useEffect } from "react";
 // import { NavLink } from "react-router-dom";
@@ -131,15 +132,17 @@ export default Navbar;
 //             <NavLink to="/my-orders" className={({ isActive }) => (isActive ? activeStyle : undefined)}>My Orders</NavLink>
 //             <NavLink to="/my-account" className={({ isActive }) => (isActive ? activeStyle : undefined)}>My Account</NavLink>
 //             <NavLink to="/sign-in" className={({ isActive }) => (isActive ? activeStyle : undefined)}>Sign In</NavLink>
+//           </div>
+//           <div className="flex items-center space-x-4">
+//             <div className="md:hidden">
+//               <button onClick={toggleMenu} className="text-gray-500 focus:outline-none">
+//                 <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} className="w-6 h-6" />
+//               </button>
+//             </div>
 //             <div className="flex items-center">
 //               <FontAwesomeIcon icon={faShoppingCart} className="w-6 h-6 text-gray-500 cursor-pointer" onClick={openCart} />
 //               <span>{count}</span>
 //             </div>
-//           </div>
-//           <div className="md:hidden flex items-center">
-//             <button onClick={toggleMenu} className="text-gray-500 focus:outline-none">
-//               <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} className="w-6 h-6" />
-//             </button>
 //           </div>
 //         </div>
 //       </div>
@@ -150,16 +153,10 @@ export default Navbar;
 //             <NavLink to="/clothes" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>Clothes</NavLink>
 //             <NavLink to="/electronics" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>Electronics</NavLink>
 //             <NavLink to="/jewelry" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>Jewelry</NavLink>
-//           </div>
-//           <div className="flex flex-col space-y-1">
 //             <NavLink to="/my-order" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>My Order</NavLink>
 //             <NavLink to="/my-orders" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>My Orders</NavLink>
 //             <NavLink to="/my-account" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>My Account</NavLink>
 //             <NavLink to="/sign-in" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>Sign In</NavLink>
-//             <div className="flex items-center">
-//               <FontAwesomeIcon icon={faShoppingCart} className="w-6 h-6 text-gray-500 cursor-pointer" onClick={openCart} />
-//               <span>{count}</span>
-//             </div>
 //           </div>
 //         </div>
 //       </div>
