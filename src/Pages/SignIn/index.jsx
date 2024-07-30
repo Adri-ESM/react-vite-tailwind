@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth, googleProvider, signInWithEmailAndPassword, signInWithPopup } from '../../Firebase';
 import Layout from '../../Components/Layout';
@@ -5,6 +6,8 @@ import GoogleIcon from '../../assets/icons';
 
 const SignIn = () => {
   const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleGoogleSignIn = async () => {
     try {
@@ -17,28 +20,15 @@ const SignIn = () => {
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      setEmail('');
+      setPassword('');
       navigate('/');
     } catch (error) {
       console.error('Error signing in: ', error);
     }
   };
-
-  const redirectToSignUp = () => {
-    navigate('/sign-up');
-  };
-
-  // const handleClear = () => {
-  //   setFormData({
-  //     email: '',
-  //     password: '',
-  //     isAdult: false
-  //   });
-  // };
 
   return (
     <Layout>
@@ -61,6 +51,8 @@ const SignIn = () => {
             name="email"
             placeholder="Email"
             className="border rounded p-2 mb-2 w-60 focus:outline-none"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
           <input
@@ -68,6 +60,8 @@ const SignIn = () => {
             name="password"
             placeholder="Password"
             className="border rounded p-2 mb-2 w-60 focus:outline-none"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
           <button
@@ -79,7 +73,7 @@ const SignIn = () => {
         </form>
         <div className="flex">
           <button
-            onClick={redirectToSignUp}
+            onClick={() => navigate('/sign-up')}
             className="w-18 h-10 ml-3 text-justify mb-4 justify-between bg-green-500 text-white px-4 py-2 rounded"
           >
             Create Account
@@ -91,4 +85,3 @@ const SignIn = () => {
 };
 
 export default SignIn;
-

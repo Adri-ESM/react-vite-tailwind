@@ -18,7 +18,7 @@ export default function ProductDetail() {
     <aside
       className={`${
         context.isProductDetailOpen ? "flex" : "hidden"
-      } product-detail scrollable-cards flex-col fixed right-0 border border-black rounded-lg bg-white $`}
+      } product-detail scrollable-cards flex-col fixed right-0 z-20 border border-black rounded-lg bg-white $`}
     >
       <div className="flex justify-between items-center p-6">
         <h2 className="font-medium text-xl">Detail</h2>
