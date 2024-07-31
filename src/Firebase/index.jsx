@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from 'firebase/firestore';
 
@@ -20,7 +20,8 @@ const googleProvider = new GoogleAuthProvider();
 const analytics = getAnalytics(app);
 const db = getFirestore(app); // Initialize Firestore
 
-export { auth, googleProvider, createUserWithEmailAndPassword, signInWithPopup, signInWithEmailAndPassword, analytics, db };
+
+export { auth, googleProvider, createUserWithEmailAndPassword, signInWithPopup, signInWithEmailAndPassword, signOut, analytics, db };
 
 
 

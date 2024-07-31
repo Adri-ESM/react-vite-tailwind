@@ -1,0 +1,25 @@
+.user-avatar {
+    position: relative;
+  }
+  
+  .logout-button {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: #f56565;
+    color: #fff;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    margin-top: 0.5rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .user-avatar:hover .logout-button {
+    display: block;
+  }
+  
+  .logout-button:hover {
+    background-color: #e53e3e;
+  }
+  
