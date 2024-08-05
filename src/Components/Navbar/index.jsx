@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { ShoppingCartContext } from "../../Contexts/Context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { auth, signOut } from "../../Firebase";
+import { auth } from "../../Firebase";
 
 const Navbar = () => {
   const { openCart, count } = useContext(ShoppingCartContext);
@@ -35,15 +35,6 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleSignOut = async () => {
-    try {
-      await signOut(auth);
-      setUser(null);
-    } catch (error) {
-      console.error('Error signing out: ', error);
-    }
-  };
-
   const handleProfileClick = () => {
     navigate('/my-account');
   };
@@ -69,20 +60,14 @@ const Navbar = () => {
               <NavLink to="/sign-in" className={({ isActive }) => (isActive ? activeStyle : undefined)}>Sign In</NavLink>
             )}
             {user && (
-              <div className="relative flex items-center">
-                <img
-                  src={user.photoURL}
-                  alt="User Avatar"
-                  className="w-10 h-10 rounded-full cursor-pointer"
-                  onClick={handleProfileClick}
-                />
-                <button
-                  onClick={handleSignOut}
-                  className="bg-red-500 text-white px-4 py-2 rounded mt-8 ml-4 hover:bg-red-600 transition duration-300"
-                >
-                  Sign Out
-                </button>
-              </div>
+               <div className="relative flex items-center">
+               <img
+                 src={user.photoURL}
+                 alt="User Avatar"
+                 className="w-10 h-10 rounded-full cursor-pointer"
+                 onClick={handleProfileClick}
+               />
+             </div>
             )}
           </div>
           <div className="flex items-center space-x-4">
@@ -119,7 +104,6 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
 
 
 
