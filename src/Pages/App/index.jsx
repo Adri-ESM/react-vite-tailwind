@@ -1,10 +1,5 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
-import { ShoppingCartProvider } from "../../Contexts/Context";
-import { ApiDataProvider } from "../../Contexts/ContextApi";
-import { FilteredProvider } from "../../Contexts/ContextFilter";
-import PrivateRoute from "../../Components/PrivateRoute";
-import { AuthProvider } from "../../Contexts/AuthProvider";
 import Navbar from "../../Components/Navbar";
 import Home from "../Home";
 import MyAccount from "../MyAccount";
@@ -18,6 +13,25 @@ import SignIn from "../SignIn";
 import SignUp from "../../Components/SignUp";
 import Cart from "../../Components/Cart";
 import "../../App.css";
+import { ShoppingCartProvider } from "../../Contexts/Context";
+import { ApiDataProvider } from "../../Contexts/ContextApi";
+import { FilteredProvider } from "../../Contexts/ContextFilter"; 
+import PrivateRoute from "../../Components/PrivateRoute";
+import { AuthProvider } from "../../Contexts/AuthProvider"; // Asegúrate de que este proveedor esté correctamente configurado
+
+const RedirectHomeOnMount = () => {
+  const navigate = useNavigate();
+  const [redirected, setRedirected] = useState(false);
+
+  useEffect(() => {
+    if (!redirected) {
+      navigate("/");
+      setRedirected(true);
+    }
+  }, [navigate, redirected]);
+
+  return null;
+};
 
 const AppRoutes = () => (
   <AuthProvider>
@@ -45,6 +59,7 @@ const App = () => {
         <FilteredProvider>
           <ShoppingCartProvider>
             <Router>
+              <RedirectHomeOnMount />
               <Navbar />
               <Cart />
               <AppRoutes />
@@ -62,15 +77,9 @@ export default App;
 
 
 
-
-
+//ESTE APP ES EL QUE SE VA A USAR CUANDO NO FUNCIONE FIREBASE SE VUELVE ATRAS
 // import { useEffect, useState } from "react";
 // import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
-// import { ShoppingCartProvider } from "../../Contexts/Context";
-// import { ApiDataProvider } from "../../Contexts/ContextApi";
-// import { FilteredProvider } from "../../Contexts/ContextFilter"; 
-// import PrivateRoute from "../../Components/PrivateRoute";
-// import { AuthProvider } from "../../Contexts/AuthProvider";
 // import Navbar from "../../Components/Navbar";
 // import Home from "../Home";
 // import MyAccount from "../MyAccount";
@@ -84,6 +93,11 @@ export default App;
 // import SignUp from "../../Components/SignUp";
 // import Cart from "../../Components/Cart";
 // import "../../App.css";
+// import { ShoppingCartProvider } from "../../Contexts/Context";
+// import { ApiDataProvider } from "../../Contexts/ContextApi";
+// import { FilteredProvider } from "../../Contexts/ContextFilter"; 
+// import PrivateRoute from "../../Components/PrivateRoute";
+// import { AuthProvider } from "../../Contexts/AuthProvider"; // Asegúrate de que este proveedor esté correctamente configurado
 
 // const RedirectHomeOnMount = () => {
 //   const navigate = useNavigate();
@@ -101,7 +115,7 @@ export default App;
 
 // const AppRoutes = () => (
 //   <AuthProvider>
-//     <Routes>\
+//     <Routes>
 //       <Route path="/sign-in" element={<SignIn />} />
 //       <Route path="/sign-up" element={<SignUp />} />
 //       <Route path="/" element={<Home />} />

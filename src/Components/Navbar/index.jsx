@@ -1,10 +1,9 @@
 import { useContext, useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { ShoppingCartContext } from "../../Contexts/Context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { auth, signOut } from '../../Firebase';
-
+import { auth, signOut } from "../../Firebase";
 
 const Navbar = () => {
   const { openCart, count } = useContext(ShoppingCartContext);
@@ -12,7 +11,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [user, setUser] = useState(null);
-  const [ showLogout, setShowLogout ] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,11 +20,7 @@ const Navbar = () => {
     };
 
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUser(user);
-      } else {
-        setUser(null);
-      }
+      setUser(user);
     });
 
     window.addEventListener("scroll", handleScroll);
@@ -47,14 +42,18 @@ const Navbar = () => {
     } catch (error) {
       console.error('Error signing out: ', error);
     }
-  }
+  };
+
+  const handleProfileClick = () => {
+    navigate('/my-account');
+  };
 
   return (
     <nav className={`fixed top-0 w-full z-20 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md' : 'bg-transparent'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <NavLink to="/" className="font-semibold text-lg">Adri&apost;s Shop</NavLink>
+            <NavLink to="/" className="font-semibold text-lg">Adri&apos;s Shop</NavLink>
             <div className="hidden md:flex space-x-4 ml-10">
               <NavLink to="/" className={({ isActive }) => (isActive ? activeStyle : undefined)}>Home</NavLink>
               <NavLink to="/clothes" className={({ isActive }) => (isActive ? activeStyle : undefined)}>Clothes</NavLink>
@@ -70,28 +69,20 @@ const Navbar = () => {
               <NavLink to="/sign-in" className={({ isActive }) => (isActive ? activeStyle : undefined)}>Sign In</NavLink>
             )}
             {user && (
-           <div className="relative mt-4"
-           onMouseEnter={() => setShowLogout(true)}
-           onMouseLeave={() => setShowLogout(false)}
-         >
-         <div className="relative">
-           <img
-             src={user.photoURL}
-             alt="User Avatar"
-             className="w-10 h-10 rounded-full cursor-pointer"
-           />
-         </div>
-         {showLogout && (
-           <div className="absolute top-12 left-1/2 transform -translate-x-1/2 w-32 flex justify-center">
-             <button
-               onClick={handleSignOut}
-               className="bg-red-500 text-white w-32 h-10 rounded hover:bg-red-600 transition duration-300"
-             >
-               Sign Out
-             </button>
-           </div>
-         )}
-      </div>
+              <div className="relative flex items-center">
+                <img
+                  src={user.photoURL}
+                  alt="User Avatar"
+                  className="w-10 h-10 rounded-full cursor-pointer"
+                  onClick={handleProfileClick}
+                />
+                <button
+                  onClick={handleSignOut}
+                  className="bg-red-500 text-white px-4 py-2 rounded mt-8 ml-4 hover:bg-red-600 transition duration-300"
+                >
+                  Sign Out
+                </button>
+              </div>
             )}
           </div>
           <div className="flex items-center space-x-4">
@@ -134,6 +125,7 @@ export default Navbar;
 
 
 
+//ESTE NABVAR ES EL QUE SE VA A USAR CUANDO NO FUNCIONE FIREBASE SE VUELVE ATRAS
 // import { useContext, useState, useEffect } from "react";
 // import { NavLink } from "react-router-dom";
 // import { ShoppingCartContext } from "../../Contexts/Context";
@@ -145,6 +137,7 @@ export default Navbar;
 //   const activeStyle = "underline underline-thickness-thin underline-offset-4";
 //   const [isMenuOpen, setIsMenuOpen] = useState(false);
 //   const [isScrolled, setIsScrolled] = useState(false);
+//   const [user, setUser] = useState(null);
 
 //   useEffect(() => {
 //     const handleScroll = () => {
@@ -152,6 +145,14 @@ export default Navbar;
 //       setIsScrolled(scrollTop > 0);
 //     };
 
+//     // Simula la verificación de autenticación
+//     const mockAuth = () => {
+//       setTimeout(() => {
+//         setUser({ displayName: 'Mock User', photoURL: 'https://via.placeholder.com/40' });
+//       }, 1000);
+//     };
+
+//     mockAuth();
 //     window.addEventListener("scroll", handleScroll);
 
 //     return () => {
@@ -163,12 +164,16 @@ export default Navbar;
 //     setIsMenuOpen(!isMenuOpen);
 //   };
 
+//   const handleSignOut = () => {
+//     setUser(null);
+//   };
+
 //   return (
 //     <nav className={`fixed top-0 w-full z-20 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md' : 'bg-transparent'}`}>
 //       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 //         <div className="flex justify-between items-center h-16">
 //           <div className="flex items-center">
-//             <NavLink to="/" className="font-semibold text-lg">Adri&apost;s Shop</NavLink>
+//             <NavLink to="/" className="font-semibold text-lg">Adri&apos;s Shop</NavLink>
 //             <div className="hidden md:flex space-x-4 ml-10">
 //               <NavLink to="/" className={({ isActive }) => (isActive ? activeStyle : undefined)}>Home</NavLink>
 //               <NavLink to="/clothes" className={({ isActive }) => (isActive ? activeStyle : undefined)}>Clothes</NavLink>
@@ -180,7 +185,19 @@ export default Navbar;
 //             <NavLink to="/my-order" className={({ isActive }) => (isActive ? activeStyle : undefined)}>My Order</NavLink>
 //             <NavLink to="/my-orders" className={({ isActive }) => (isActive ? activeStyle : undefined)}>My Orders</NavLink>
 //             <NavLink to="/my-account" className={({ isActive }) => (isActive ? activeStyle : undefined)}>My Account</NavLink>
-//             <NavLink to="/sign-in" className={({ isActive }) => (isActive ? activeStyle : undefined)}>Sign In</NavLink>
+//             {!user && (
+//               <NavLink to="/sign-in" className={({ isActive }) => (isActive ? activeStyle : undefined)}>Sign In</NavLink>
+//             )}
+//             {user && (
+//               <div className="relative">
+//                 <img
+//                   src={user.photoURL}
+//                   alt="User Avatar"
+//                   className="w-10 h-10 rounded-full cursor-pointer"
+//                   onClick={handleSignOut}
+//                 />
+//               </div>
+//             )}
 //           </div>
 //           <div className="flex items-center space-x-4">
 //             <div className="md:hidden">
@@ -205,7 +222,9 @@ export default Navbar;
 //             <NavLink to="/my-order" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>My Order</NavLink>
 //             <NavLink to="/my-orders" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>My Orders</NavLink>
 //             <NavLink to="/my-account" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>My Account</NavLink>
-//             <NavLink to="/sign-in" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>Sign In</NavLink>
+//             {!user && (
+//               <NavLink to="/sign-in" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>Sign In</NavLink>
+//             )}
 //           </div>
 //         </div>
 //       </div>

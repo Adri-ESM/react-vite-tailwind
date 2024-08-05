@@ -1,7 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { getAnalytics } from "firebase/analytics";
+//import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from 'firebase/firestore';
+//import { setLogLevel } from 'firebase/app';
 
 const firebaseConfig = {
     apiKey: "AIzaSyCJYyfQVVEqC-UDPv7HKtBlvmhjGUOXGNE",
@@ -17,11 +18,18 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
-const analytics = getAnalytics(app);
+//const analytics = getAnalytics(app);
 const db = getFirestore(app); // Initialize Firestore
 
+//setLogLevel("debug");
 
-export { auth, googleProvider, createUserWithEmailAndPassword, signInWithPopup, signInWithEmailAndPassword, signOut, analytics, db };
+// Initialize Google Analytics only if window is defined
+// let analytics;
+// if (typeof window !== "undefined") {
+//   analytics = getAnalytics(app);
+// }
+
+export { auth, googleProvider, createUserWithEmailAndPassword, signInWithPopup, signInWithEmailAndPassword, signOut, db };
 
 
 
