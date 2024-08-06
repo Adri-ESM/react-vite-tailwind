@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth, googleProvider, signInWithEmailAndPassword, signInWithPopup } from '../../firebaseConfig';
+import { auth, googleProvider, signInWithEmailAndPassword, signInWithPopup } from '../../Firebase';
 import Layout from '../../Components/Layout';
-import GoogleIcon from '../../assets/icons/GoogleIcon';
+import GoogleIcon from '../../assets/icons';
 
 const SignIn = () => {
   const navigate = useNavigate();
