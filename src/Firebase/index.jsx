@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from 'firebase/firestore';
+// import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCJYyfQVVEqC-UDPv7HKtBlvmhjGUOXGNE",
@@ -20,9 +20,9 @@ const googleProvider = new GoogleAuthProvider();
 const db = getFirestore(app); // Initialize Firestore
 
 // Initialize Google Analytics only if window is defined
-let analytics;
-if (typeof window !== "undefined") {
-  analytics = getAnalytics(app);
-}
+// let analytics;
+// if (typeof window !== "undefined") {
+//   analytics = getAnalytics(app);
+// }
 
-export { auth, googleProvider, createUserWithEmailAndPassword, signInWithPopup, signInWithEmailAndPassword, signOut, analytics, db };
+export { auth, googleProvider, createUserWithEmailAndPassword, signInWithPopup, signInWithEmailAndPassword, signOut, db };
