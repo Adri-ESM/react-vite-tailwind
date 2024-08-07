@@ -40,9 +40,9 @@ const AppRoutes = () => (
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/" element={<Home />} />
       <Route path="/my-account" element={<MyAccount />} />
-      <Route path="/my-order" element={<MyOrder />} />
-      <Route path="/my-order/:orderId" element={<MyOrder />} />
-      <Route path="/my-orders" element={<MyOrders />} />
+      <Route path="/my-order" element={<PrivateRoute><MyOrder /></PrivateRoute>} />
+      <Route path="/my-order/:orderId" element={<PrivateRoute><MyOrder /></PrivateRoute>} />
+      <Route path="/my-orders" element={<PrivateRoute><MyOrders /></PrivateRoute>} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/clothes" element={<Clothes />} />
       <Route path="/electronics" element={<Electronics />} />

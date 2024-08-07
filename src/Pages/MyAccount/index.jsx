@@ -16,14 +16,15 @@ function MyAccount() {
   };
   return (
     <Layout>
-      <h1>This is My Account</h1>
-
-      <button
-                 onClick={handleSignOut}
-                 className="bg-red-500 text-white px-4 py-2 rounded ml-4 hover:bg-red-600 transition duration-300"
-               >
-                 Sign Out
-               </button>
+      <div className="flex">
+        <h1 className="">My Account</h1>
+        <button
+            onClick={handleSignOut}
+            className="bg-red-500 text-white px-4 py-2 rounded ml-4 hover:bg-red-600 transition duration-300"
+            >
+            Sign Out
+        </button>
+      </div>
       <Cart />
     </Layout>
   );

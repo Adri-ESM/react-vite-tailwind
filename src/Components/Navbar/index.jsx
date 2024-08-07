@@ -55,19 +55,19 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-4">
             <NavLink to="/my-order" className={({ isActive }) => (isActive ? activeStyle : undefined)}>My Order</NavLink>
             <NavLink to="/my-orders" className={({ isActive }) => (isActive ? activeStyle : undefined)}>My Orders</NavLink>
-            <NavLink to="/my-account" className={({ isActive }) => (isActive ? activeStyle : undefined)}>My Account</NavLink>
-            {!user && (
+            {user ? (
+              <>
+                <div className="relative flex items-center">
+                  <img
+                    src={user.photoURL}
+                    alt="User Avatar"
+                    className="w-10 h-10 rounded-full cursor-pointer"
+                    onClick={handleProfileClick}
+                  />
+                </div>
+              </>
+            ) : (
               <NavLink to="/sign-in" className={({ isActive }) => (isActive ? activeStyle : undefined)}>Sign In</NavLink>
-            )}
-            {user && (
-               <div className="relative flex items-center">
-               <img
-                 src={user.photoURL}
-                 alt="User Avatar"
-                 className="w-10 h-10 rounded-full cursor-pointer"
-                 onClick={handleProfileClick}
-               />
-             </div>
             )}
           </div>
           <div className="flex items-center space-x-4">
@@ -92,8 +92,9 @@ const Navbar = () => {
             <NavLink to="/jewelry" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>Jewelry</NavLink>
             <NavLink to="/my-order" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>My Order</NavLink>
             <NavLink to="/my-orders" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>My Orders</NavLink>
-            <NavLink to="/my-account" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>My Account</NavLink>
-            {!user && (
+            {user ? (
+              <NavLink to="/my-account" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>My Account</NavLink>
+            ) : (
               <NavLink to="/sign-in" className={({ isActive }) => (isActive ? activeStyle : undefined)} onClick={toggleMenu}>Sign In</NavLink>
             )}
           </div>
@@ -108,13 +109,13 @@ export default Navbar;
 
 
 
-
-//ESTE NABVAR ES EL QUE SE VA A USAR CUANDO NO FUNCIONE FIREBASE SE VUELVE ATRAS
+// RESPALDO NAVBAR 07-8-2024
 // import { useContext, useState, useEffect } from "react";
-// import { NavLink } from "react-router-dom";
+// import { NavLink, useNavigate } from "react-router-dom";
 // import { ShoppingCartContext } from "../../Contexts/Context";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faShoppingCart, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+// import { auth } from "../../Firebase";
 
 // const Navbar = () => {
 //   const { openCart, count } = useContext(ShoppingCartContext);
@@ -122,6 +123,7 @@ export default Navbar;
 //   const [isMenuOpen, setIsMenuOpen] = useState(false);
 //   const [isScrolled, setIsScrolled] = useState(false);
 //   const [user, setUser] = useState(null);
+//   const navigate = useNavigate();
 
 //   useEffect(() => {
 //     const handleScroll = () => {
@@ -129,18 +131,15 @@ export default Navbar;
 //       setIsScrolled(scrollTop > 0);
 //     };
 
-//     // Simula la verificación de autenticación
-//     const mockAuth = () => {
-//       setTimeout(() => {
-//         setUser({ displayName: 'Mock User', photoURL: 'https://via.placeholder.com/40' });
-//       }, 1000);
-//     };
+//     const unsubscribe = auth.onAuthStateChanged((user) => {
+//       setUser(user);
+//     });
 
-//     mockAuth();
 //     window.addEventListener("scroll", handleScroll);
 
 //     return () => {
 //       window.removeEventListener("scroll", handleScroll);
+//       unsubscribe();
 //     };
 //   }, []);
 
@@ -148,8 +147,8 @@ export default Navbar;
 //     setIsMenuOpen(!isMenuOpen);
 //   };
 
-//   const handleSignOut = () => {
-//     setUser(null);
+//   const handleProfileClick = () => {
+//     navigate('/my-account');
 //   };
 
 //   return (
@@ -173,14 +172,14 @@ export default Navbar;
 //               <NavLink to="/sign-in" className={({ isActive }) => (isActive ? activeStyle : undefined)}>Sign In</NavLink>
 //             )}
 //             {user && (
-//               <div className="relative">
-//                 <img
-//                   src={user.photoURL}
-//                   alt="User Avatar"
-//                   className="w-10 h-10 rounded-full cursor-pointer"
-//                   onClick={handleSignOut}
-//                 />
-//               </div>
+//                <div className="relative flex items-center">
+//                <img
+//                  src={user.photoURL}
+//                  alt="User Avatar"
+//                  className="w-10 h-10 rounded-full cursor-pointer"
+//                  onClick={handleProfileClick}
+//                />
+//              </div>
 //             )}
 //           </div>
 //           <div className="flex items-center space-x-4">
