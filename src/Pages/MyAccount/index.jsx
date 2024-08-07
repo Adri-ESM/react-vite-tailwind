@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../../Components/Layout";
 import Cart from "../../Components/Cart";
 import { auth, signOut } from "../../Firebase";
+import Back from "../../Components/Back";
 
 function MyAccount() {
-  const [setUser] = useState(null);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      setUser(currentUser);
+    }
+  }, []);
 
   const handleSignOut = async () => {
     try {
@@ -14,16 +22,25 @@ function MyAccount() {
       console.error('Error signing out: ', error);
     }
   };
+
+
   return (
     <Layout>
-      <div className="flex">
-        <h1 className="">My Account</h1>
-        <button
+      <Back />
+      <div className="flex mt-20">
+        <div className="flex items-center justify-between w-full py-3 px-5">
+          <h1 className="text-xl font-semibold items-center">
+            Welcome, {user ? (user.displayName || user.email) : "Guest"}!
+          </h1>
+        </div>
+        <div>
+          <button
             onClick={handleSignOut}
-            className="bg-red-500 text-white px-4 py-2 rounded ml-4 hover:bg-red-600 transition duration-300"
+            className="bg-red-500 text-white px-8 items-end rounded-full hover:bg-red-600 transition duration-300"
             >
-            Sign Out
-        </button>
+          Sign Out
+          </button>
+        </div>
       </div>
       <Cart />
     </Layout>
